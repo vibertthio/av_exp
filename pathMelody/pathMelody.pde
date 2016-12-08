@@ -1,5 +1,8 @@
-import oscP5.*;
-import netP5.*;
+import org.puredata.processing.PureData;
+
+PureData pd;
+// import oscP5.*;
+// import netP5.*;
 
 //Constants
 int numberOfRedPoints = 16;
@@ -22,8 +25,8 @@ TimeLine moveTimer;
 TimeLine stopTimer;
 
 //oscP5
-OscP5 oscP5;
-NetAddress other;
+// OscP5 oscP5;
+// NetAddress other;
 
 void setup() {
   frameRate(100);
@@ -36,8 +39,12 @@ void setup() {
   stopTimer = new TimeLine(50);
 
   //oscP5
-  oscP5 = new OscP5(this, 12000);
-  other = new NetAddress("127.0.0.1", 12001);
+  // oscP5 = new OscP5(this, 12000);
+  // other = new NetAddress("127.0.0.1", 12001);
+
+  pd = new PureData(this, 44100, 0, 2);
+  pd.unpackAndOpenPatch("sound.tar", "sound.pd");
+  pd.start();
 }
 void draw() {
   background(0);
@@ -152,22 +159,28 @@ void positionUpdate() {
   nextPosition = ( currentPosition + 1 ) % numberOfRedPoints;
 }
 void sendOSC() {
-  OscMessage msg = new OscMessage("/point");
+  // OscMessage msg = new OscMessage("/point");
   float x = map( points[redPoints[nextPosition]][0],
                  0, width, 0, 1);
   float y = map( points[redPoints[nextPosition]][1],
                  height, 0, 0, 1); //from low to high
-  msg.add( x );
-  msg.add( y );
-  oscP5.send(msg, other);
+  // msg.add( x );
+  // msg.add( y );
+  // oscP5.send(msg, other);
+  pd.sendFloat("pitch", x);
+  pd.sendFloat("volume", y);
 }
 void startOSC() {
-  OscMessage msg = new OscMessage("/start");
-  oscP5.send(msg, other);
+  // OscMessage msg = new OscMessage("/start");
+  // oscP5.send(msg, other);
+  pd.sendFloat("start", 1.0);
+
 }
 void endOSC() {
-  OscMessage msg = new OscMessage("/end");
-  oscP5.send(msg, other);
+  // OscMessage msg = new OscMessage("/end");
+  // oscP5.send(msg, other);
+  pd.sendFloat("end", (float)0.0);
+
 }
 
 void debug() {
