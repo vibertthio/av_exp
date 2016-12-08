@@ -43,7 +43,9 @@ void setup() {
   // other = new NetAddress("127.0.0.1", 12001);
 
   pd = new PureData(this, 44100, 0, 2);
-  pd.unpackAndOpenPatch("sound.tar", "sound.pd");
+  pd.unpackAndOpenPatch("test.tar", "test.pd");
+  // pd.unpackAndOpenPatch("test3.tar", "test3.pd");
+
   pd.start();
 }
 void draw() {
@@ -57,6 +59,9 @@ void draw() {
     display();
     displayMovingPoint();
   }
+
+  // ellipse(mouseX, mouseY, 20, 20);
+
 }
 void exit(){
   endOSC();
@@ -69,6 +74,9 @@ void mousePressed() {
   drawing = true;
   clearPoints();
   endOSC();
+
+  // pd.sendFloat("pitch", (float)mouseX / (float)width); // Send float message to symbol "pitch" in Pd.
+  // pd.sendFloat("volume", (float)mouseY / (float)height);
 }
 /*
 END DRAWING*/
@@ -134,7 +142,7 @@ void displayMovingPoint() {
                        moveTimer.liner() );
     }
     else {
-      println("send signal!");
+      //println("send signal!");
       sendOSC();
       stopTimer.startTimer();
       moving = false;
@@ -167,20 +175,20 @@ void sendOSC() {
   // msg.add( x );
   // msg.add( y );
   // oscP5.send(msg, other);
-  pd.sendFloat("pitch", x);
-  pd.sendFloat("volume", y);
+  println("x:" + str(x) + " y:" + str(y));
+  pd.sendFloat("x", (float)x);
+  pd.sendFloat("y", (float)y);
 }
 void startOSC() {
   // OscMessage msg = new OscMessage("/start");
   // oscP5.send(msg, other);
-  pd.sendFloat("start", 1.0);
+  pd.sendFloat("start", (float)1.0);
 
 }
 void endOSC() {
   // OscMessage msg = new OscMessage("/end");
   // oscP5.send(msg, other);
   pd.sendFloat("end", (float)0.0);
-
 }
 
 void debug() {
