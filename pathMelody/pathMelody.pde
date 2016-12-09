@@ -43,25 +43,24 @@ void setup() {
   // other = new NetAddress("127.0.0.1", 12001);
 
   pd = new PureData(this, 44100, 0, 2);
-  pd.unpackAndOpenPatch("test.tar", "test.pd");
+  // pd.unpackAndOpenPatch("test.tar", "test.pd");
   // pd.unpackAndOpenPatch("test3.tar", "test3.pd");
+  // pd.unpackAndOpenPatch("test4.tar", "test4.pd");
+  pd.openPatch("test4.pd");
 
   pd.start();
 }
 void draw() {
   background(0);
   debug();
+  display();
+
   if ( drawing ) {
     addPoint();
-    display();
   }
   else {
-    display();
     displayMovingPoint();
   }
-
-  // ellipse(mouseX, mouseY, 20, 20);
-
 }
 void exit(){
   endOSC();
