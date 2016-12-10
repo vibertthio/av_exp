@@ -1,4 +1,4 @@
-#N canvas 257 317 827 567 10;
+#N canvas 538 210 827 567 10;
 #X obj 212 67 r period;
 #X obj 88 64 s period;
 #X floatatom 87 40 5 0 0 0 - - -, f 5;
@@ -192,7 +192,7 @@
 #X connect 24 0 1 0;
 #X restore 336 232 pd sound;
 #X obj 336 204 f;
-#N canvas 0 22 722 589 sound 0;
+#N canvas 471 271 722 589 sound 0;
 #X obj 272 353 osc~ 440;
 #X obj 257 416 *~;
 #X obj 365 157 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
@@ -319,6 +319,7 @@
 #X obj 343 113 f 1;
 #X obj 291 95 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
 -1;
+#X obj 169 376 clone 50 sound;
 #X connect 0 0 8 1;
 #X connect 0 0 10 1;
 #X connect 0 0 12 1;

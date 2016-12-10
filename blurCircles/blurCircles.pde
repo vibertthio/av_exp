@@ -21,7 +21,7 @@ void setup() {
   hint(ENABLE_DEPTH_SORT);
 
   pd = new PureData(this, 44100, 0, 2);
-  pd.openPatch("test.pd");
+  pd.openPatch("test2.pd");
   pd.start();
 }
 
