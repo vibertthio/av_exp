@@ -1,8 +1,6 @@
 import org.puredata.processing.PureData;
 
 PureData pd;
-// import oscP5.*;
-// import netP5.*;
 
 //Constants
 int numberOfRedPoints = 16;
@@ -24,10 +22,6 @@ boolean moving = false;
 TimeLine moveTimer;
 TimeLine stopTimer;
 
-//oscP5
-// OscP5 oscP5;
-// NetAddress other;
-
 void setup() {
   frameRate(100);
   size(800, 800);
@@ -37,10 +31,6 @@ void setup() {
 
   moveTimer = new TimeLine(300);
   stopTimer = new TimeLine(50);
-
-  //oscP5
-  // oscP5 = new OscP5(this, 12000);
-  // other = new NetAddress("127.0.0.1", 12001);
 
   pd = new PureData(this, 44100, 0, 2);
   // pd.unpackAndOpenPatch("test.tar", "test.pd");
@@ -88,6 +78,7 @@ void mouseReleased() {
   moveTimer.startTimer();
   startOSC();
 }
+
 
 //Other Function
 void addPoint() {
@@ -160,7 +151,6 @@ void displayMovingPoint() {
   ellipse(x, y,
          2 * radiusOfYellowPoints, 2 * radiusOfYellowPoints);
 }
-
 void positionUpdate() {
   currentPosition = ( currentPosition + 1 ) % numberOfRedPoints;
   nextPosition = ( currentPosition + 1 ) % numberOfRedPoints;
@@ -189,7 +179,6 @@ void endOSC() {
   // oscP5.send(msg, other);
   pd.sendFloat("end", (float)0.0);
 }
-
 void debug() {
   // println("moveTimer: state=" + str(moveTimer.state) + " liner=" + str(moveTimer.liner()));
   // println("stopTimer: state=" + str(stopTimer.state) + " liner=" + str(stopTimer.liner()));
