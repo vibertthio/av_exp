@@ -37,7 +37,6 @@ void setup() {
   // pd.unpackAndOpenPatch("test3.tar", "test3.pd");
   // pd.unpackAndOpenPatch("test4.tar", "test4.pd");
   pd.openPatch("test4.pd");
-
   pd.start();
 }
 void draw() {
