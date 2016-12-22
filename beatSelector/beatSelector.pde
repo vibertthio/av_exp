@@ -9,7 +9,8 @@ int r_pressed;
 int c_dragged;
 int r_dragged;
 
-
+Square sq;
+boolean exist;
 
 //state
 boolean pressed = false;
@@ -32,6 +33,10 @@ void draw() {
   if (pressed) {
     drawFrame();
   }
+
+  if (pressed) {
+    sq.display();
+  }
 }
 
 void mousePressed() {
@@ -43,6 +48,7 @@ void mousePressed() {
 }
 
 void mouseReleased() {
+  sq = new
   pressed = false;
 }
 
