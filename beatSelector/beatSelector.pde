@@ -9,7 +9,7 @@ int r_pressed;
 int c_dragged;
 int r_dragged;
 
-int pressedIndex;
+int pressedIndex = -1;
 
 Square[] squares;
 int numberOfSquares = 4;
