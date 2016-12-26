@@ -1,4 +1,5 @@
 class Square {
+  int id;
   int cols;
   int rows;
   int[][] grid;
@@ -13,13 +14,14 @@ class Square {
 
 
 
-  Square(int c_s, int r_s, int c_e, int r_e) {
+  Square(int c_s, int r_s, int c_e, int r_e, int _id) {
     xpos = 0;
     ypos = 0;
     c_start = c_s;
     r_start = r_s;
     c_end = c_e;
     r_end = r_e;
+    id = _id;
     // println(c_s);
     // println(r_s);
     // println(c_e);
@@ -33,9 +35,13 @@ class Square {
         grid[i][j] = grids[c_start+i][r_start+j];
       }
     }
+
+    timer = new TimeLine (200);
+    timer.setLinerRate(4);
   }
 
   void update() {
+    timer.startTimer();
     if ( xpos < cols - 1 ) {
       xpos = xpos + 1;
     }
@@ -47,6 +53,7 @@ class Square {
       xpos = 0;
       ypos = 0;
     }
+    sendOSC();
   }
 
   void display() {
@@ -61,9 +68,20 @@ class Square {
            - r_start * scl);
 
     noStroke();
-    fill(cf);
-    rect( (c_start + xpos) * scl,
-          (r_start + ypos) * scl,
-          scl, scl);
+    fill(cf, 200 * (1 - timer.liner()));
+    pushMatrix();
+    translate((c_start + xpos + 0.5) * scl,
+              (r_start + ypos + 0.5) * scl);
+    ellipse(0, 0, scl / 1.33 , scl / 1.33);
+    popMatrix();
+    // rect( (c_start + xpos) * scl,
+    //       (r_start + ypos) * scl,
+    //       scl, scl);
+  }
+
+  void sendOSC() {
+    OscMessage msg = new OscMessage("/f" + str (id));
+    msg.add( grid[xpos][ypos] );
+    oscP5.send(msg, other);
   }
 }

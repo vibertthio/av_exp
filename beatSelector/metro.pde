@@ -44,7 +44,13 @@ class Metro {
   int currentTime() {
     return millis();
   }
-
+  void setLimit(int l) {
+    pause();
+    int fc = frameCount();
+    limit = l;
+    localtime = currentTime() - fc * limit;
+    startPlayingAt(fc);
+  }
   // void setTime (int fCount) { //input is the frame count
   //   timeInterval = fCount * limit;
   // }
@@ -71,13 +77,7 @@ class Metro {
   //   localtime = currentTime() - fc * limit;
   //   startPlayingAt(fc);
   // }
-  // void setLimit(int l) {
-  //   pause();
-  //   int fc = frameCount();
-  //   limit = l;
-  //   localtime = currentTime() - fc * limit;
-  //   startPlayingAt(fc);
-  // }
+
   // float step = 1;
   // void speedUp() {
   //   pause();

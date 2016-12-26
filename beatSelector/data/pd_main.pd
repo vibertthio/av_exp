@@ -1,0 +1,17 @@
+#N canvas 310 348 727 508 10;
+#X obj 44 58 unpackOSC;
+#X obj 44 112 print OSCpack;
+#X obj 44 33 udpreceive 12002;
+#X obj 145 83 route /f0 /f1 /f2 /f3 /start /end;
+#X obj 189 279 dac~;
+#X obj 161 218 sound;
+#X obj 224 220 sound;
+#X connect 0 0 1 0;
+#X connect 0 0 3 0;
+#X connect 2 0 0 0;
+#X connect 3 0 5 0;
+#X connect 3 1 5 1;
+#X connect 3 2 6 0;
+#X connect 3 3 6 1;
+#X connect 5 0 4 0;
+#X connect 6 0 4 1;
