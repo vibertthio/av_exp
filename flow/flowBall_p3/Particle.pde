@@ -30,9 +30,10 @@ class Particle {
   }
 
   void display() {
-    stroke(0);
-    strokeWeight(3);
-    point(this.pos.x, this.pos.y);
+    noStroke();
+    fill(0);
+
+    ellipse(this.pos.x, this.pos.y, 5, 5);
     // line(this.pos.x, this.pos.y, this.prevPos.x, this.prevPos.y);
     // this.updatePrev();
   }
