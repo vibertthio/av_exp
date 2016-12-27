@@ -3,7 +3,7 @@ int rows;
 float scl = 20;
 float inc_x = 0.09;
 float inc_y = 0.09;
-float inc_z = 0.005;
+float inc_z = 0.01;
 int angleVar = 2;
 float magOfForce = 0.5;
 float zoff = 0;
@@ -30,6 +30,7 @@ void setup() {
 
 
 void draw() {
+  background(255);
   float yoff = 0;
   for (int y = 0; y < rows; y++) {
     float xoff = 0;

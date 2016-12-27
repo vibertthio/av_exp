@@ -30,11 +30,7 @@ class Square {
     cols = max(c_e, c_s) - min(c_e, c_s) + 1;
     rows = max(r_e, r_s) - min(r_e, r_s) + 1;
     grid = new int[cols][rows];
-    for (int i=0; i<cols; i++) {
-      for (int j=0; j<rows; j++) {
-        grid[i][j] = grids[c_start+i][r_start+j];
-      }
-    }
+    updateGrid();
 
     timer = new TimeLine (200);
     timer.setLinerRate(4);
@@ -54,6 +50,14 @@ class Square {
       ypos = 0;
     }
     sendOSC();
+  }
+
+  void updateGrid() {
+    for (int i=0; i<cols; i++) {
+      for (int j=0; j<rows; j++) {
+        grid[i][j] = grids[c_start+i][r_start+j];
+      }
+    }
   }
 
   void display() {

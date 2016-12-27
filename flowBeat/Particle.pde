@@ -30,10 +30,10 @@ class Particle {
   }
 
   void display() {
-    stroke(0);
-    strokeWeight(3);
-    point(this.pos.x, this.pos.y);
-    // line(this.pos.x, this.pos.y, this.prevPos.x, this.prevPos.y);
+    stroke(0, 5);
+    strokeWeight(1);
+    // point(this.pos.x, this.pos.y);
+    line(this.pos.x, this.pos.y, this.prevPos.x, this.prevPos.y);
     // this.updatePrev();
   }
 
