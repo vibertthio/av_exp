@@ -25,6 +25,7 @@ class Circle {
     appear = new TimeLine(2000);
     appear.startTimer();
     timer = new TimeLine(500);
+    timer.elapsedTime = 0;
   }
 
   void update() {

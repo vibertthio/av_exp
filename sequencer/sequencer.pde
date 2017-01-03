@@ -20,6 +20,7 @@ void setup() {
   circles = new ArrayList<Circle>();
   metro = new Metro(true, 300);
   beat = 0;
+  b = 0;
   bang = false;
 
   //oscP5
@@ -34,6 +35,9 @@ void draw() {
   if (metro.frameCount() > beat) {
     println("beat : " + beat);
     beat = beat + 1;
+    if (!circles.isEmpty()) {
+      b = beat % ( circles.size() );
+    }
     bang = true;
   }
   else {
@@ -41,11 +45,9 @@ void draw() {
   }
 
 
-  if (!circles.isEmpty()) {
-    b = beat % ( circles.size() );
-  }
 
-  for (int i = 0; i < circles.size(); i++) {
+
+  for (int i = 0, n = circles.size(); i < n; i++) {
     Circle c = circles.get(i);
     c.update();
     c.display();
@@ -68,4 +70,12 @@ void keyPressed() {
   if (key == ' ') {
     circles.clear();
   }
+}
+
+int nOfC(ArrayList<Circle> list) {
+  int ret = 0;
+  for( int i = 0, n = list.size(); i < n; i++) {
+    if ( !list.get(i).move ) { ret++; }
+  }
+  return ret;
 }
