@@ -1,5 +1,11 @@
-function Particle() {
-  this.pos = createVector(random(1000), random(800));
+function Particle(x, y) {
+  if (x&&y) {
+    this.pos = createVector(x, y);
+  }
+  else {
+    this.pos = createVector(random(width), random(height));
+  }
+  
   this.vel = p5.Vector.random2D(0, 0);
   // this.vel = createVector(0, 0);
   this.acc = createVector(0, 0);
@@ -21,7 +27,7 @@ function Particle() {
   }
 
   this.show = function() {
-    stroke(0, 5);
+    stroke('rgba('+ str(r) +','+ str(g) +','+ str(b) +',0.02)');
     // strokeWeight(3);
     // point(this.pos.x, this.pos.y);
     line(this.pos.x, this.pos.y, this.prevPos.x, this.prevPos.y);

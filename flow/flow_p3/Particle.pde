@@ -5,6 +5,7 @@ class Particle {
   PVector prevPos;
   float mass = 1;
   float maxspeed = 4;
+  color col;
 
 
   Particle() {
@@ -30,8 +31,25 @@ class Particle {
   }
 
   void display() {
-    stroke(0, 5);
+    float rate = 6.5;
+    float offset = 3.7;
+    int scale = 30;
+    // int r = floor((noiseField[5] * 6 + 5.70074) * 15 * ( 1 + noiseField[5]));
+    // int g = floor((noiseField[cols] * 6 + 5.70074) * 15 * ( 1 + noiseField[cols]));
+    // int b = floor((noiseField[(cols - 1)*(rows - 1)] * 6 + 5.70074) * 15 * ( 1 + noiseField[(cols - 1)*(rows - 1)]));
+    int r = floor((noiseField[5] * rate + offset) * scale);
+    int g = floor((noiseField[cols] * rate + offset) * scale);
+    int b = floor((noiseField[(cols - 1)*(rows - 1)] * rate + offset) * scale);
+
+    println("r:" + r);
+    println("g:" + g);
+    println("b:" + b);
+
+    col = color(r, g, b);
+
+    stroke(col, 5);
     strokeWeight(1);
+
     // point(this.pos.x, this.pos.y);
     line(this.pos.x, this.pos.y, this.prevPos.x, this.prevPos.y);
     // this.updatePrev();
