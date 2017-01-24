@@ -1,6 +1,11 @@
 <html>
 <head>
   <meta charset="UTF-8">
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans'
+        rel='stylesheet'
+        type='text/css'>
+  <title>A/V Lab live</title>
+
   <script language="javascript" type="text/javascript" src="libraries/maxiLib.js"></script>
   <script language="javascript" type="text/javascript" src="libraries/p5.js"></script>
   <!-- uncomment lines below to include extra p5 libraries -->
@@ -14,11 +19,55 @@
   <script language="javascript" type="text/javascript" src="max.js"></script>
 
   <!-- this line removes any default padding and style. you might only need one of these values set. -->
-  <style> body {padding: 0; margin: 0;} </style>
+  <style>
+    html {
+      background-color: #AAAAAA;
+      font-size: 10px; /* px means 'pixels': the base font size is now 10 pixels high  */
+      font-family: 'Open Sans', sans-serif;
+    }
+
+    body {
+      /*width: 600px;*/
+      margin: 50px auto;
+      /*background-color: #FF9500;*/
+      /*padding: 0 20px 20px 20px;*/
+      /*border: 5px solid black;*/
+    }
+
+    h1 {
+      font-size: 65px;
+      text-align: center;
+    }
+
+    p{
+      padding-left: 400px;
+      font-size: 16px;
+      line-height: 2;
+      letter-spacing: 1px;
+    }
+
+    ol{
+      padding-left: 500px;
+      font-size: 16px;
+      line-height: 2;
+      letter-spacing: 1px;
+    }
+
+    #sketch-holder {
+        display: block;
+        margin: auto;
+        height: 800px;
+        width: 800px;
+        /*background-color: powderblue;*/
+    }
+
+  </style>
 </head>
 
 <body>
   <h1>A/V Lab live</h1>
+  <p>(created by Vibert Thio, based on Aluan Wang's work)</p>
+
   <p>there are 4 boxes : </p>
   <ol>
     <li>the pitch of sound 1</li>
