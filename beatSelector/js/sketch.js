@@ -19,6 +19,16 @@ var squares = [];
 
 //sound
 // var osc = new soundEngine();
+var maximJs;
+var audio = new maximJs.maxiAudio();
+audio.init();
+
+var clk = new maximJs.maxiClock();
+clk.setTicksPerBeat(4);
+clk.setTempo(60);
+
+var se = new soundEngine();
+var se2 = new soundEngine();
 
 function setup() {
   var canvas = createCanvas(windowWidth, windowWidth);
