@@ -18,7 +18,7 @@ var numberOfSquares = 4;
 var squares = [];
 
 //sound
-var osc = new soundEngine();
+// var osc = new soundEngine();
 
 function setup() {
   var canvas = createCanvas(windowWidth, windowWidth);
@@ -41,45 +41,14 @@ function draw() {
   background(80);
   display();
 
-  var next = false;
-  if (metro.frameCount() > beat) {
-    beat = beat + 1;
-    next = true;
-    // update()1;
-    console.log("beat:" + str(beat));
-
-
-  }
-
   for (var i = 0; i < numberOfSquares; i++) {
     if (touched && pressedIndex == i) {
       drawFrame();
     }
     else {
-      if (next) {
-        squares[i].update();
-      }
       squares[i].display();
     }
   }
-
-  if (next) {
-    var midi1 = map(squares[0].getValue(), 0, 255, 55, 80);
-    var amp1 = map(squares[1].getValue(), 0, 255, 0.3, 1);
-
-    if (pressedIndex != 0 && pressedIndex != 1) {
-      osc.trigger(midi1, amp1);
-    }
-
-    var midi2 = map(squares[2].getValue(), 0, 255, 55, 80);
-    var amp2 = map(squares[3].getValue(), 0, 255, 0.3, 1);
-
-    if (pressedIndex != 2 && pressedIndex != 3) {
-      osc.trigger(midi1, amp1);
-    }
-  }
-
-
 }
 
 function init() {
@@ -100,6 +69,11 @@ function update() {
     for (var j = 0; j < rows; j++) {
       grids[i][j] = floor(random(255));
     }
+  }
+}
+function updateSquares() {
+  for (var i = 0; i < numberOfSquares; i++) {
+    squares[i].update();
   }
 }
 function display() {
@@ -175,3 +149,14 @@ function keyReleased() {
 }
 
 //sound functions
+function midi(sq) {
+  var midi = floor(map(sq.getValue(), 0, 255, 55, 80));
+  return midi;
+}
+function amp(sq) {
+  var amp = map(sq.getValue(), 0, 255, 0.3, 1);
+  return amp;
+}
+function m2f (midi) {
+  return 440 * pow(2, (midi - 69) / 12);
+}
