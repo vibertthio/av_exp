@@ -21,7 +21,7 @@ var squares = [];
 // var osc = new soundEngine();
 
 function setup() {
-  var canvas = createCanvas(windowWidth / 3, windowWidth / 3);
+  var canvas = createCanvas(800, 800);
   background(80);
   canvas.parent('sketch-holder');
 
