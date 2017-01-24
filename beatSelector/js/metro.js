@@ -1,16 +1,16 @@
 function Metro(ss, ll) {
   this.state = ss;
   this.elapsedTime;
-  this.localtime;
+  this.localtime = millis();
   this.limit = ll;
   this.timeInterval = 0;
 
   this.frameCount = function() {
     if (this.state) {
-      return (this.currentTime() - this.localtime) / this.limit;
+      return floor ( (this.currentTime() - this.localtime) / this.limit );
     }
     else {
-      return this.timeInterval / this.limit;
+      return floor ( this.timeInterval / this.limit );
     }
   }
 
