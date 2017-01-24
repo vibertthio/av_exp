@@ -12,7 +12,7 @@ var se2 = new soundEngine();
 audio.play = function() {
   clk.ticker();
   if (clk.tick) {
-    console.log("tick!");
+    console.log("tic1k!");
     updateSquares();
 
     //sound1
