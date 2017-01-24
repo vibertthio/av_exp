@@ -21,33 +21,31 @@
   <!-- this line removes any default padding and style. you might only need one of these values set. -->
   <style>
     html {
-      background-color: #AAAAAA;
+      /*background-color: #AAAAAA;*/
+      background-color: #2980b9;
       font-size: 10px; /* px means 'pixels': the base font size is now 10 pixels high  */
       font-family: 'Open Sans', sans-serif;
     }
 
     body {
-      /*width: 600px;*/
+      width: 800px;
       margin: 50px auto;
-      /*background-color: #FF9500;*/
-      /*padding: 0 20px 20px 20px;*/
-      /*border: 5px solid black;*/
+      padding: 0 20px 20px 20px;
     }
 
     h1 {
+      color: #34495e;
       font-size: 65px;
       text-align: center;
     }
 
-    p{
-      padding-left: 400px;
-      font-size: 16px;
-      line-height: 2;
-      letter-spacing: 1px;
+    #main {
+      width: 800px;
+      align: center;
     }
 
-    ol{
-      padding-left: 500px;
+    p, li {
+      color: #34495e;
       font-size: 16px;
       line-height: 2;
       letter-spacing: 1px;
@@ -58,7 +56,10 @@
         margin: auto;
         height: 800px;
         width: 800px;
-        /*background-color: powderblue;*/
+        border-style: solid;
+        border-width: 5px;
+        border-color: #34495e;
+
     }
 
   </style>
@@ -66,16 +67,21 @@
 
 <body>
   <h1>A/V Lab live</h1>
-  <p>(created by Vibert Thio, based on Aluan Wang's work)</p>
+  <div id="main">
+    <div >
+      <p>(created by Vibert Thio, based on Aluan Wang's work)</p>
+      <p>there are 4 boxes : </p>
+      <ol>
+        <li>the pitch of sound 1</li>
+        <li>the amplitude fo sound 1</li>
+        <li>the pitch of sound 2</li>
+        <li>the amplitude fo sound 2</li>
+      </ol>
+      <p>press 1~4 and dragged to adjust the position of boxes.(gh-pages)</p>
+    </div>
+  </div>
 
-  <p>there are 4 boxes : </p>
-  <ol>
-    <li>the pitch of sound 1</li>
-    <li>the amplitude fo sound 1</li>
-    <li>the pitch of sound 2</li>
-    <li>the amplitude fo sound 2</li>
-  </ol>
-  <p>press 1~4 and dragged to adjust the position of boxes.(gh-pages)</p>
+
   <div id="sketch-holder">
     <!-- Our sketch will go here! -->
   </div>
