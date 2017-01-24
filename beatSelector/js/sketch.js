@@ -19,7 +19,7 @@ var squares = [];
 // var osc = new soundEngine();
 
 function setup() {
-  var canvas = createCanvas(windowWidth, windowWidth);
+  var canvas = createCanvas(windowWidth / 3, windowWidth / 3);
   background(80);
   canvas.parent('sketch-holder');
 
