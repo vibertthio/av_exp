@@ -9,9 +9,7 @@ var r_pressed;
 var c_dragged;
 var r_dragged;
 
-var metro;
 var bpm = 180;
-var beat;
 
 var pressedIndex = -1;
 var numberOfSquares = 4;
@@ -19,16 +17,6 @@ var squares = [];
 
 //sound
 // var osc = new soundEngine();
-var maximJs;
-var audio = new maximJs.maxiAudio();
-audio.init();
-
-var clk = new maximJs.maxiClock();
-clk.setTicksPerBeat(4);
-clk.setTempo(60);
-
-var se = new soundEngine();
-var se2 = new soundEngine();
 
 function setup() {
   var canvas = createCanvas(windowWidth, windowWidth);
@@ -40,11 +28,10 @@ function setup() {
   console.log(cols);
   console.log(rows);
 
-  metro = new Metro(true, bpm2limit(bpm));
-  beat = metro.frameCount();
   init();
   drawFrame()
   display();
+
 }
 
 function draw() {

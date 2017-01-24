@@ -1,13 +1,13 @@
-// var maximJs;
-// var audio = new maximJs.maxiAudio();
-// audio.init();
-//
-// var clk = new maximJs.maxiClock();
-// clk.setTicksPerBeat(4);
-// clk.setTempo(60);
-//
-// var se = new soundEngine();
-// var se2 = new soundEngine();
+var maximJs;
+var audio = new maximJs.maxiAudio();
+audio.init();
+
+var clk = new maximJs.maxiClock();
+clk.setTicksPerBeat(4);
+clk.setTempo(60);
+
+var se = new soundEngine();
+var se2 = new soundEngine();
 
 audio.play = function() {
   clk.ticker();
