@@ -31,5 +31,5 @@ audio.play = function() {
   }
 
   var o = se.getOutput() * 0.5 + se2.getOutput() * 0.5;
-  this.output = o * 0.;
+  this.output = o * 0.5;
 }
