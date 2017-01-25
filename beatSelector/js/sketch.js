@@ -15,9 +15,6 @@ var pressedIndex = -1;
 var numberOfSquares = 4;
 var squares = [];
 
-//sound
-// var osc = new soundEngine();
-
 function setup() {
   var canvas = createCanvas(800, 800);
   background(80);
@@ -77,7 +74,8 @@ function display() {
   for (var i = 0; i < cols; i++) {
     for (var j = 0; j < rows; j++) {
       noStroke();
-      fill(210, 82, 127, grids[i][j]);
+      fill(26, 188, 156, grids[i][j]);
+      // fill(210, 82, 127, grids[i][j]);
       rect(i*scl, j*scl, scl, scl);
     }
   }
