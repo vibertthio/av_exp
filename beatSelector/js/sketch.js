@@ -9,9 +9,7 @@ var r_pressed;
 var c_dragged;
 var r_dragged;
 
-var metro;
 var bpm = 180;
-var beat;
 
 var pressedIndex = -1;
 var numberOfSquares = 4;
@@ -30,11 +28,10 @@ function setup() {
   console.log(cols);
   console.log(rows);
 
-  metro = new Metro(true, bpm2limit(bpm));
-  beat = metro.frameCount();
   init();
   drawFrame()
   display();
+
 }
 
 function draw() {
