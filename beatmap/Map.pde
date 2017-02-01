@@ -1,4 +1,5 @@
 class Map {
+  int id;
   PGraphics canvas;
   Node[][] nodes;
   float xpos, ypos;
@@ -12,8 +13,8 @@ class Map {
   boolean mouseOver = false;
 
 
-  Map(float _x, float _y) {
-    println("len: " + len);
+  Map(int _i, float _x, float _y) {
+    id = _i;
     xx = 0;
     yy = 0;
     xpos = _x;
@@ -25,7 +26,8 @@ class Map {
 
     for(int i = 0; i < nOfc; i++) {
       for(int j = 0; j < nOfc; j++) {
-        nodes[i][j] = new Node(canvas, i, j);
+        nodes[i][j] = new Node(this, i, j);
+        nodes[i][j].setOt(otDefault[j * nOfc + i]);
       }
     }
   }
@@ -107,9 +109,13 @@ class Map {
     if ( inGrids(mX, mY) ) {
       int i = floor((mX - margin)/ float(scl));
       int j = floor((mY - margin)/ float(scl));
-      println("i: " + i);
-      println("j: " + j);
-      nodes[i][j].rotateClockwise();
+
+      if (activating) {
+        nodes[i][j].activate();
+      }
+      else {
+        nodes[i][j].rotateClockwise();
+      }
     }
   }
   boolean contain(float x, float y) {

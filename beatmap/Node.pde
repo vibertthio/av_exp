@@ -1,30 +1,43 @@
 class Node {
+  Map map;
+
   PGraphics canvas;
 
   //position and orientation
   TimeLine timer;
   float angle;
-  int ot = 0;
+  int ot;
   float unitOfAngle = PI / 2;
   float rotateRate = 0.2;
   int xpos, ypos;
 
-  Node(PGraphics _canvas, int _x, int _y) {
-    canvas = _canvas;
+  //state
+  boolean active = false;
+
+  Node(Map _m, int _x, int _y) {
+    map = _m;
+    canvas = map.canvas;
     timer = new TimeLine(300);
     timer.setLinerRate(2);
     timer.set1();
     xpos = _x;
     ypos = _y;
     angle = 0;
+    ot = floor(random(4));
   }
 
   void update() {
     angle = angle + rotateRate * (ot * unitOfAngle - angle);
   }
   void display() {
+    shapeDisplay();
+    blinkDisplay();
+  }
+  void shapeDisplay() {
     canvas.pushMatrix();
-    canvas.fill(255);
+    if (active) { canvas.fill(_active); }
+    else { canvas.fill(_normal); }
+
     canvas.translate(margin + scl / 2, margin + scl / 2);
     canvas.translate(xpos * scl, ypos * scl);
 
@@ -39,7 +52,8 @@ class Node {
     // canvas.strokeWeight(3);
     // canvas.point(0, 0);
     canvas.popMatrix();
-
+  }
+  void blinkDisplay() {
     //blink
     canvas.pushMatrix();
     canvas.translate(margin, margin);
@@ -50,14 +64,33 @@ class Node {
     canvas.rect(0, 0, scl, scl);
     canvas.popMatrix();
   }
+
+  //signal
+  void activate() {
+    active = !active;
+  }
   void trigger() {
     timer.startTimer();
+    if (active) {
+      sendOSC();
+    }
+  }
+  void sendOSC() {
+    OscMessage msg = new OscMessage("/m" + str(map.id));
+    oscP5.send(msg, other);
   }
 
+  //utility
+  void setOt(int _o) {
+    ot = _o;
+  }
   void rotateClockwise() {
     ot = ot + 1;
   }
   void rotateCounterclockwise() {
     ot = ot - 1;
   }
+
+
+
 }
