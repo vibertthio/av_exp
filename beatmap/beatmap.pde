@@ -10,6 +10,7 @@ color _gbk = color (80, 80, 80);
 color _blink = color (142, 68, 173);
 color _normal = color (255, 255, 255);
 color _active = color (82, 179, 217);
+color _adjustTime = color (27, 163, 156);
 
 //state
 boolean activating = false;

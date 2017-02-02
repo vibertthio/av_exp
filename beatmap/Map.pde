@@ -4,6 +4,7 @@ class Map {
   Node[][] nodes;
   float xpos, ypos;
   Metro metro;
+  int timeUnit = 200;
   int xx, yy;
   int beat;
 
@@ -11,6 +12,10 @@ class Map {
 
   //state
   boolean mouseOver = false;
+  boolean adjustTimes = false;
+  Tab tabOfTimes;
+  boolean mouseOverTimes = false;
+  float alpha;
 
 
   Map(int _i, float _x, float _y) {
@@ -20,7 +25,7 @@ class Map {
     xpos = _x;
     ypos = _y;
     canvas = createGraphics(len, len);
-    metro = new Metro(true, 200);
+    metro = new Metro(true, timeUnit);
     beat = metro.frameCount();
     nodes = new Node[nOfc][nOfc];
 
@@ -30,6 +35,9 @@ class Map {
         nodes[i][j].setOt(otDefault[j * nOfc + i]);
       }
     }
+
+    //tabs
+    tabOfTimes = new Tab(this, 0, _adjustTime);
   }
 
   void update() {
@@ -68,6 +76,8 @@ class Map {
     backgroundDisplay();
     gridDisplay();
     nodesDisplay();
+    controlPanelDisplay();
+
     canvas.endDraw();
     image(canvas, xpos, ypos);
   }
@@ -93,12 +103,27 @@ class Map {
       }
     }
   }
+  void controlPanelDisplay() {
+    // float al = (mouseOverTimes)?200:50;
+    // alpha = alpha + 0.2 * (al - alpha);
+    //
+    // canvas.pushMatrix();
+    // canvas.noStroke();
+    // canvas.fill(_adjustTime, alpha);
+    // canvas.translate(margin, 0);
+    // canvas.rect(scl / 8, 0, scl * 3 / 4, scl / 3);
+    // canvas.popMatrix();
+    tabOfTimes.display();
+  }
   void mouseSensed(float _mX, float _mY) {
     mX = _mX - xpos;
     mY = _mY - ypos;
 
     if ( contain(mX, mY)) {
       mouseOver = true;
+      int i = floor((mX - margin)/ float(scl));
+      int j = floor((mY - margin)/ float(scl));
+      tabOfTimes.mouseOver = (i == 0 && j == -1);
     }
     else {
       mouseOver = false;
@@ -106,15 +131,19 @@ class Map {
   }
 
   void mousePressed() {
+    int i = floor((mX - margin)/ float(scl));
+    int j = floor((mY - margin)/ float(scl));
     if ( inGrids(mX, mY) ) {
-      int i = floor((mX - margin)/ float(scl));
-      int j = floor((mY - margin)/ float(scl));
-
       if (activating) {
         nodes[i][j].activate();
       }
       else {
         nodes[i][j].rotateClockwise();
+      }
+    }
+    else {
+      if (i == 0 && j == -1) {
+        tabOfTimes.activate();
       }
     }
   }
