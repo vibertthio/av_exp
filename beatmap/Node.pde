@@ -4,30 +4,51 @@ class Node {
   PGraphics canvas;
 
   //position and orientation
-  TimeLine timer;
+  TimeLine timerOfColor;
+  TimeLine timerOfTiming;
+
   float angle;
   int ot;
   float unitOfAngle = PI / 2;
   float rotateRate = 0.2;
   int xpos, ypos;
 
+  int nOftiming = 1;
+  int timingCount = 0;
+
   //state
   boolean active = false;
+  boolean triggering = false;
 
   Node(Map _m, int _x, int _y) {
     map = _m;
     canvas = map.canvas;
-    timer = new TimeLine(300);
-    timer.setLinerRate(2);
-    timer.set1();
+    timerOfColor = new TimeLine(300);
+    timerOfColor.setLinerRate(2);
+    timerOfColor.set1();
     xpos = _x;
     ypos = _y;
     angle = 0;
     ot = floor(random(4));
+
+    timerOfTiming = new TimeLine(map.timeUnit / nOftiming);
   }
 
   void update() {
     angle = angle + rotateRate * (ot * unitOfAngle - angle);
+    if (active) {
+      if (triggering) {
+        if (timingCount == nOftiming) {
+          timingCount = 0;
+          triggering = false;
+        }
+        else if (timerOfTiming.liner() == 1) {
+          timingCount++;
+          sendOSC();
+          timerOfTiming.startTimer();
+        }
+      }
+    }
   }
   void display() {
     shapeDisplay();
@@ -60,7 +81,7 @@ class Node {
     canvas.translate(xpos * scl, ypos * scl);
 
     canvas.noStroke();
-    canvas.fill(_blink, 200 * (1 - timer.liner()));
+    canvas.fill(_blink, 200 * (1 - timerOfColor.liner()));
     canvas.rect(0, 0, scl, scl);
     canvas.popMatrix();
   }
@@ -70,8 +91,12 @@ class Node {
     active = !active;
   }
   void trigger() {
-    timer.startTimer();
+    timingCount = 0;
+    triggering = true;
+    timerOfColor.startTimer();
+    timerOfTiming.startTimer();
     if (active) {
+      timingCount++;
       sendOSC();
     }
   }
@@ -79,6 +104,19 @@ class Node {
     OscMessage msg = new OscMessage("/m" + str(map.id));
     oscP5.send(msg, other);
   }
+
+  //parameter adjustment
+  void setTiming() {
+    nOftiming = (nOftiming % 4) + 1;
+    println("timing: " + nOftiming);
+    timerOfTiming.limit = map.timeUnit / nOftiming;
+  }
+  void setTiming(int i) {
+    nOftiming = i;
+    timerOfTiming.limit = map.timeUnit / nOftiming;
+  }
+
+
 
   //utility
   void setOt(int _o) {

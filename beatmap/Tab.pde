@@ -24,7 +24,7 @@ class Tab {
 
     canvas.pushMatrix();
     canvas.noStroke();
-    canvas.fill(_adjustTime, alpha);
+    canvas.fill(col, alpha);
     canvas.translate(margin + pos * scl, 0);
     canvas.rect(padding, 0, w, h);
     canvas.popMatrix();
