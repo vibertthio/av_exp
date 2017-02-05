@@ -14,6 +14,7 @@ class Map {
   boolean mouseOver = false;
   Tab tabOfTimes;
   Tab tabOfPitch;
+  Tab tabOfVel;
 
 
   Map(int _i, float _x, float _y) {
@@ -37,7 +38,7 @@ class Map {
     //tabs
     tabOfTimes = new Tab(this, 0, _adjustTime);
     tabOfPitch = new Tab(this, 1, _adjustPitch);
-
+    tabOfVel = new Tab(this, 2, _adjustVel);
   }
 
   void update() {
@@ -106,6 +107,7 @@ class Map {
   void controlPanelDisplay() {
     tabOfTimes.display();
     tabOfPitch.display();
+    tabOfVel.display();
   }
   void mouseSensed(float _mX, float _mY) {
     mX = _mX - xpos;
@@ -117,6 +119,7 @@ class Map {
       int j = floor((mY - margin)/ float(scl));
       tabOfTimes.mouseOver = (i == 0 && j == -1);
       tabOfPitch.mouseOver = (i == 1 && j == -1);
+      tabOfVel.mouseOver = (i == 2 && j == -1);
     }
     else {
       mouseOver = false;
@@ -144,6 +147,9 @@ class Map {
       }
       else if (i == 1){
         tabOfPitch.activate();
+      }
+      else if (i == 2) {
+        tabOfVel.activate();
       }
     }
   }

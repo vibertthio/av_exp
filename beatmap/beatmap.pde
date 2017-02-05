@@ -12,7 +12,7 @@ color _normal = color (255, 255, 255);
 color _active = color (82, 179, 217);
 color _adjustTime = color (27, 163, 156);
 color _adjustPitch = color (246, 36, 89);
-
+color _adjustVel = color (249, 191, 59);
 //state
 boolean activating = false;
 
