@@ -10,11 +10,23 @@ class Map {
 
   float mX, mY;
 
+  int[] pitchStep = {
+    36, 37, 39, 41, 43, 44, 46,
+    48, 49, 51, 53, 55, 56, 58,
+    60, 61, 63, 65, 67, 68, 70,
+  };
+
   //state
   boolean mouseOver = false;
-  Tab tabOfTimes;
-  Tab tabOfPitch;
-  Tab tabOfVel;
+
+  //sense, pressed, display
+  //three sections need to be adjusted
+  // Tab tabOfTimes;
+  // Tab tabOfPitch;
+  // Tab tabOfVel;
+
+  Tab[] tabs;
+  int nOfTabs = 3;
 
 
   Map(int _i, float _x, float _y) {
@@ -36,34 +48,13 @@ class Map {
     }
 
     //tabs
-    tabOfTimes = new Tab(this, 0, _adjustTime);
-    tabOfPitch = new Tab(this, 1, _adjustPitch);
-    tabOfVel = new Tab(this, 2, _adjustVel);
+    tabs = new Tab[nOfTabs];
+    for (int i = 0; i < nOfTabs; i++) {
+      tabs[i] = new Tab(this, i, _colorOfTabs[i]);
+    }
   }
 
   void update() {
-    // if (metro.frameCount() > beat) {
-    //   beat = beat + 1;
-    //   nodes[xx][yy].trigger();
-    //   //TODO the unit of angle
-    //
-    //   int ot = nodes[xx][yy].ot % 4;
-    //   switch(ot) {
-    //     case 0 :
-    //       xx = (xx + nOfc + 1) % nOfc;
-    //       break;
-    //     case 1 :
-    //       yy = (yy + nOfc + 1) % nOfc;
-    //       break;
-    //     case 2 :
-    //       xx = (xx + nOfc - 1) % nOfc;
-    //       break;
-    //     case 3 :
-    //       yy = (yy + nOfc - 1) % nOfc;
-    //       break;
-    //     default:
-    //   }
-    // }
     for(int i = 0; i < nOfc; i++) {
       for(int j = 0; j < nOfc; j++) {
         nodes[i][j].update();
@@ -131,9 +122,9 @@ class Map {
     }
   }
   void controlPanelDisplay() {
-    tabOfTimes.display();
-    tabOfPitch.display();
-    tabOfVel.display();
+    for (int i = 0; i < nOfTabs; i++) {
+      tabs[i].display();
+    }
   }
   void mouseSensed(float _mX, float _mY) {
     mX = _mX - xpos;
@@ -141,11 +132,11 @@ class Map {
 
     if ( contain(mX, mY)) {
       mouseOver = true;
-      int i = floor((mX - margin)/ float(scl));
-      int j = floor((mY - margin)/ float(scl));
-      tabOfTimes.mouseOver = (i == 0 && j == -1);
-      tabOfPitch.mouseOver = (i == 1 && j == -1);
-      tabOfVel.mouseOver = (i == 2 && j == -1);
+      int c = floor((mX - margin)/ float(scl));
+      int r = floor((mY - margin)/ float(scl));
+      for (int i = 0; i < nOfTabs; i++) {
+        tabs[i].mouseOver = (c == i && r == -1);
+      }
     }
     else {
       mouseOver = false;
@@ -153,31 +144,41 @@ class Map {
   }
 
   void mousePressed() {
-    int i = floor((mX - margin)/ float(scl));
-    int j = floor((mY - margin)/ float(scl));
+    int c = floor((mX - margin)/ float(scl));
+    int r = floor((mY - margin)/ float(scl));
     if ( inGrids(mX, mY) ) {
-      if (tabOfTimes.active) {
-        nodes[i][j].setTiming();
+      Node node = nodes[c][r];
+      if (activating) {
+        node.activate();
       }
-      else if (activating) {
-        nodes[i][j].activate();
+      else if (tabs[TIMES].active) {
+        node.setTiming();
+      }
+      else if (tabs[VELOCITY].active) {
+        node.setVelocity();
+      }
+      else if (tabs[PITCH].active) {
+        node.setPitch();
       }
       else {
-        nodes[i][j].rotateClockwise();
+        node.rotateClockwise();
       }
     }
-    else if (j == -1){
+    else if (contain(mX, mY)) {
+      if (r == -1){
+        for (int i = 0; i < nOfTabs; i++) {
+          if (c != i) {
+            tabs[i].deactivate();
+          }
+          else {
+            tabs[i].trigger();
+          }
+        }
+      }
+    }
+  }
+  void mouseWheel(float e) {
 
-      if (i == 0) {
-        tabOfTimes.activate();
-      }
-      else if (i == 1){
-        tabOfPitch.activate();
-      }
-      else if (i == 2) {
-        tabOfVel.activate();
-      }
-    }
   }
   boolean contain(float x, float y) {
     return (x > 0)&&(x < len )&&(y > 0)&&(y < len);

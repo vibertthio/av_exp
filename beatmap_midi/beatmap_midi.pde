@@ -14,9 +14,17 @@ color _gbk = color (80, 80, 80);
 color _blink = color (142, 68, 173);
 color _normal = color (255, 255, 255);
 color _active = color (82, 179, 217);
-color _adjustTime = color (27, 163, 156);
-color _adjustPitch = color (246, 36, 89);
-color _adjustVel = color (249, 191, 59);
+
+final int TIMES = 0;
+final int VELOCITY = 1;
+final int PITCH = 2;
+
+color[] _colorOfTabs = {
+  color (27, 163, 156),
+  color (246, 36, 89),
+  color (249, 191, 59),
+};
+
 //state
 boolean activating = false;
 
@@ -26,23 +34,42 @@ int gap = 50;
 int nOfc = 4;
 int len = nOfc * scl + margin * 2;
 
+// int[] otDefault = {
+//   0, 0, 0, 0, 0, 1,
+//   1, 2, 2, 2, 2, 2,
+//   0, 0, 0, 0, 0, 1,
+//   1, 2, 2, 2, 2, 2,
+//   0, 0, 0, 0, 0, 1,
+//   1, 2, 2, 2, 2, 2,
+// };
 int[] otDefault = {
-  0, 0, 0, 0, 0, 1,
-  1, 2, 2, 2, 2, 2,
-  0, 0, 0, 0, 0, 1,
-  1, 2, 2, 2, 2, 2,
-  0, 0, 0, 0, 0, 1,
-  1, 2, 2, 2, 2, 2,
+  0, 0, 0, 1,
+  1, 2, 2, 2,
+  0, 0, 0, 1,
+  1, 2, 2, 2,
 };
-
 int[] midiNotes = {
-  36, 38, 44, 39, 45, 49,
+  36,
+  38,
+  44,
+  39,
+  45,
+  49,
+};
+int[] channels = {
+  1,
+  1,
+  1,
+  2,
+  2,
+  3,
 };
 
 ArrayList<Map> maps;
 
 void setup() {
-  size(1080, 720);
+  // size(1080, 720);
+  size(800, 550);
   background(_bk);
   maps = new ArrayList<Map>();
   for (int i = 0; i < 6; i++) {
@@ -56,9 +83,9 @@ void setup() {
   other = new NetAddress("127.0.0.1", 12002);
 
   //midi
-  midi = new MidiBus(this, 0, 4);
+  MidiBus.list();
+  midi = new MidiBus(this, 0, 2);
 }
-
 void draw() {
   background(_bk);
 
@@ -78,6 +105,14 @@ void mousePressed() {
     map.mousePressed();
   }
 }
+
+void mouseWheel(MouseEvent event) {
+  float e = event.getCount();
+  for (int i = 0, n = maps.size(); i < n; i++) {
+    Map map = maps.get(i);
+    map.mouseWheel(e);
+  }
+}
 void keyPressed() {
   if (key == 't') {
     activating = true;
@@ -94,7 +129,6 @@ void rawMidi(byte[] data) { // You can also use rawMidi(byte[] data, String bus_
   // println("clock(" + (int)(data[0] & 0xFF) + ")");
   if ((int)(data[0] & 0xFF) == 248) {
     if (beat % 24 == 0) {
-      println(beat);
       for (int i = 0; i < 6; i++) {
         maps.get(i).toNext();
       }
@@ -104,11 +138,9 @@ void rawMidi(byte[] data) { // You can also use rawMidi(byte[] data, String bus_
         maps.get(i).sendClock(beat);
       }
     }
-    
     beat = (beat + 1);
   }
 }
-
 void showfr() {
   fill(255);
   text( "frameRate: " + str(frameRate),10, 20);

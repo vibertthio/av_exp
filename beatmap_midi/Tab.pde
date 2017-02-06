@@ -30,7 +30,14 @@ class Tab {
     canvas.popMatrix();
   }
 
-  void activate() {
+  void trigger() {
     active = !active;
   }
+  void activate() {
+    active = true;
+  }
+  void deactivate() {
+    active = false;
+  }
+
 }
