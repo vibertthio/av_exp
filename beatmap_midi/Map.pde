@@ -42,33 +42,59 @@ class Map {
   }
 
   void update() {
-    if (metro.frameCount() > beat) {
-      beat = beat + 1;
-      nodes[xx][yy].trigger();
-      //TODO the unit of angle
-
-      int ot = nodes[xx][yy].ot % 4;
-      switch(ot) {
-        case 0 :
-          xx = (xx + nOfc + 1) % nOfc;
-          break;
-        case 1 :
-          yy = (yy + nOfc + 1) % nOfc;
-          break;
-        case 2 :
-          xx = (xx + nOfc - 1) % nOfc;
-          break;
-        case 3 :
-          yy = (yy + nOfc - 1) % nOfc;
-          break;
-        default:
-      }
-
-
-    }
+    // if (metro.frameCount() > beat) {
+    //   beat = beat + 1;
+    //   nodes[xx][yy].trigger();
+    //   //TODO the unit of angle
+    //
+    //   int ot = nodes[xx][yy].ot % 4;
+    //   switch(ot) {
+    //     case 0 :
+    //       xx = (xx + nOfc + 1) % nOfc;
+    //       break;
+    //     case 1 :
+    //       yy = (yy + nOfc + 1) % nOfc;
+    //       break;
+    //     case 2 :
+    //       xx = (xx + nOfc - 1) % nOfc;
+    //       break;
+    //     case 3 :
+    //       yy = (yy + nOfc - 1) % nOfc;
+    //       break;
+    //     default:
+    //   }
+    // }
     for(int i = 0; i < nOfc; i++) {
       for(int j = 0; j < nOfc; j++) {
         nodes[i][j].update();
+      }
+    }
+  }
+  void toNext() {
+    nodes[xx][yy].trigger();
+    //TODO the unit of angle
+
+    int ot = nodes[xx][yy].ot % 4;
+    switch(ot) {
+      case 0 :
+        xx = (xx + nOfc + 1) % nOfc;
+        break;
+      case 1 :
+        yy = (yy + nOfc + 1) % nOfc;
+        break;
+      case 2 :
+        xx = (xx + nOfc - 1) % nOfc;
+        break;
+      case 3 :
+        yy = (yy + nOfc - 1) % nOfc;
+        break;
+      default:
+    }
+  }
+  void sendClock(int b) {
+    for(int i = 0; i < nOfc; i++) {
+      for(int j = 0; j < nOfc; j++) {
+        nodes[i][j].sendClock(b);
       }
     }
   }

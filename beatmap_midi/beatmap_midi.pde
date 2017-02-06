@@ -23,7 +23,7 @@ boolean activating = false;
 int scl = 40;
 int margin = scl / 2;
 int gap = 50;
-int nOfc = 6;
+int nOfc = 4;
 int len = nOfc * scl + margin * 2;
 
 int[] otDefault = {
@@ -68,6 +68,8 @@ void draw() {
     map.update();
     map.display();
   }
+
+  showfr();
 }
 
 void mousePressed() {
@@ -87,17 +89,27 @@ void keyReleased() {
   }
 }
 
+int beat = 0;
 void rawMidi(byte[] data) { // You can also use rawMidi(byte[] data, String bus_name)
-  // Receive some raw data
-  // data[0] will be the status byte
-  // data[1] and data[2] will contain the parameter of the message (e.g. pitch and volume for noteOn noteOff)
-  println();
-  println("Raw Midi Data:");
-  println("--------");
-  println("Status Byte/MIDI Command:"+(int)(data[0] & 0xFF));
-  // N.B. In some cases (noteOn, noteOff, controllerChange, etc) the first half of the status byte is the command and the second half if the channel
-  // In these cases (data[0] & 0xF0) gives you the command and (data[0] & 0x0F) gives you the channel
-  for (int i = 1;i < data.length;i++) {
-    println("Param "+(i+1)+": "+(int)(data[i] & 0xFF));
+  // println("clock(" + (int)(data[0] & 0xFF) + ")");
+  if ((int)(data[0] & 0xFF) == 248) {
+    if (beat % 24 == 0) {
+      println(beat);
+      for (int i = 0; i < 6; i++) {
+        maps.get(i).toNext();
+      }
+    }
+    else {
+      for (int i = 0; i < 6; i++) {
+        maps.get(i).sendClock(beat);
+      }
+    }
+    
+    beat = (beat + 1);
   }
+}
+
+void showfr() {
+  fill(255);
+  text( "frameRate: " + str(frameRate),10, 20);
 }

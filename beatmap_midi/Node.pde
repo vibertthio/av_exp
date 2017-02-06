@@ -5,7 +5,6 @@ class Node {
 
   //position and orientation
   TimeLine timerOfColor;
-  TimeLine timerOfTiming;
 
   float angle;
   int ot;
@@ -32,26 +31,24 @@ class Node {
     ypos = _y;
     angle = 0;
     ot = floor(random(4));
-
-    timerOfTiming = new TimeLine(map.timeUnit / nOftiming);
   }
 
   void update() {
     angle = angle + rotateRate * (ot * unitOfAngle - angle);
-    if (active) {
-      if (triggering) {
-        if (timingCount == nOftiming) {
-          timingCount = 0;
-          triggering = false;
-        }
-        else if (timerOfTiming.liner() == 1) {
-          timingCount++;
-          sendOSC();
-          sendMIDI();
-          timerOfTiming.startTimer();
-        }
-      }
-    }
+    // if (active) {
+    //   if (triggering) {
+    //     if (timingCount == nOftiming) {
+    //       timingCount = 0;
+    //       triggering = false;
+    //     }
+    //     else if (timerOfTiming.liner() == 1) {
+    //       timingCount++;
+    //       sendOSC();
+    //       sendMIDI();
+    //       timerOfTiming.startTimer();
+    //     }
+    //   }
+    // }
   }
   void display() {
     shapeDisplay();
@@ -97,13 +94,27 @@ class Node {
     timingCount = 0;
     triggering = true;
     timerOfColor.startTimer();
-    timerOfTiming.startTimer();
     if (active) {
       timingCount++;
       sendOSC();
       sendMIDI();
     }
   }
+
+  void sendClock(int b) {
+    if (triggering && active) {
+      if (timingCount == nOftiming) {
+        timingCount = 0;
+        triggering = false;
+      }
+      else if (b % (24 / nOftiming) == 0) {
+        timingCount++;
+        sendOSC();
+        sendMIDI();
+      }
+    }
+  }
+
   void sendOSC() {
     OscMessage msg = new OscMessage("/m" + str(map.id));
     oscP5.send(msg, other);
@@ -121,11 +132,9 @@ class Node {
   void setTiming() {
     nOftiming = (nOftiming % 4) + 1;
     println("timing: " + nOftiming);
-    timerOfTiming.limit = map.timeUnit / nOftiming;
   }
   void setTiming(int i) {
     nOftiming = i;
-    timerOfTiming.limit = map.timeUnit / nOftiming;
   }
 
 
