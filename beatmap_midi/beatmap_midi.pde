@@ -8,6 +8,10 @@ NetAddress other;
 import themidibus.*;
 MidiBus midi;
 
+//slider
+import controlP5.*;
+ControlP5 cp5;
+
 //constant
 color _bk = color (50, 50, 50);
 color _gbk = color (80, 80, 80);
@@ -18,6 +22,10 @@ color _active = color (82, 179, 217);
 final int TIMES = 0;
 final int VELOCITY = 1;
 final int PITCH = 2;
+final int OCTAVE = 3;
+final int ROTATE = 0;
+final int RANDOM = 1;
+
 
 color[] _colorOfTabs = {
   color (27, 163, 156),
@@ -76,12 +84,6 @@ void setup() {
   // size(1080, 720);
   size(800, 550);
   background(_bk);
-  maps = new ArrayList<Map>();
-  for (int i = 0; i < 6; i++) {
-    maps.add(new Map( i,
-                      ((1+i%3) * gap + len * (i%3)),
-                      (1+i/3) * gap + len * (i/3)));
-  }
 
   //oscP5
   oscP5 = new OscP5(this, 12000);
@@ -89,7 +91,19 @@ void setup() {
 
   //midi
   MidiBus.list();
-  midi = new MidiBus(this, 0, 2);
+  midi = new MidiBus(this, "Virtual MIDI Port", "p5 Port");
+  // midi = new MidiBus(this, 0, 2);
+
+  //controlP5
+  cp5 = new ControlP5(this);
+
+  //maps
+  maps = new ArrayList<Map>();
+  for (int i = 0; i < 6; i++) {
+    maps.add(new Map( i,
+                      ((1+i%3) * gap + len * (i%3)),
+                      (1+i/3) * gap + len * (i/3)));
+  }
 }
 void draw() {
   background(_bk);
@@ -108,14 +122,6 @@ void mousePressed() {
   for (int i = 0, n = maps.size(); i < n; i++) {
     Map map = maps.get(i);
     map.mousePressed();
-  }
-}
-
-void mouseWheel(MouseEvent event) {
-  float e = event.getCount();
-  for (int i = 0, n = maps.size(); i < n; i++) {
-    Map map = maps.get(i);
-    map.mouseWheel(e);
   }
 }
 void keyPressed() {

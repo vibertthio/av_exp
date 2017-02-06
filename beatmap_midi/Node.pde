@@ -10,7 +10,7 @@ class Node {
   float angle;
   int ot;
   float unitOfAngle = PI / 2;
-  float rotateRate = 0.4;
+  float rotateRate = 0.2;
   int xpos, ypos;
 
   float mainAlpha = 255;
@@ -25,14 +25,14 @@ class Node {
 
 
   //PITCH
+  boolean fixedPitch = false;
   int pitch;
-  int midiNote;
 
   //state
   boolean active = false;
   boolean triggering = false;
 
-  Node(Map _m, int _x, int _y) {
+  void init(Map _m, int _x, int _y) {
     map = _m;
     pitch = floor(random(0, map.pitchStep.length));
     canvas = map.canvas;
@@ -49,22 +49,12 @@ class Node {
     timerOfDisplay.setLinerRate(2);
     timerOfDisplay.set1();
   }
-  Node(Map _m, int _x, int _y, int _midi) {
-    map = _m;
-    midiNote = _midi;
-    canvas = map.canvas;
-    xpos = _x;
-    ypos = _y;
-    angle = 0;
-    ot = floor(random(4));
-
-    timerOfColor = new TimeLine(300);
-    timerOfColor.setLinerRate(2);
-    timerOfColor.set1();
-
-    timerOfDisplay = new TimeLine(300);
-    timerOfDisplay.setLinerRate(2);
-    timerOfDisplay.set1();
+  Node(Map _m, int _x, int _y) {
+    init(_m, _x, _y);
+  }
+  Node(Map _m, int _x, int _y, int _p) {
+    init(_m, _x, _y);
+    pitch = _p;
   }
 
   void update() {
@@ -191,6 +181,10 @@ class Node {
       sendOSC();
       sendMIDI();
     }
+
+    if (map.stabs[ROTATE].active) {
+      randomizeOt();
+    }
   }
 
   void sendClock(int b) {
@@ -212,7 +206,7 @@ class Node {
     oscP5.send(msg, other);
   }
   void sendMIDI() {
-    int ch = 0;
+    int ch = floor(map.sliderOfChannel.getValue());
     int pit = getPitch();
     int vel = getVelocity();
 
@@ -250,6 +244,14 @@ class Node {
   //utility
   void setOt(int _o) {
     ot = _o;
+  }
+  void randomizeOt() {
+    if (random(1) > 0.5) {
+      rotateClockwise();
+    }
+    else {
+      rotateCounterclockwise();
+    }
   }
   void rotateClockwise() {
     ot = ot + 1;

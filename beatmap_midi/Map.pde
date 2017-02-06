@@ -10,6 +10,7 @@ class Map {
 
   float mX, mY;
 
+  Slider sliderOfChannel;
   int[] pitchStep = {
     36, 37, 39, 41, 43, 44, 46,
     48, 49, 51, 53, 55, 56, 58,
@@ -19,22 +20,13 @@ class Map {
   //state
   boolean mouseOver = false;
 
-  //modes
-  boolean rotating = false;
-
   //sense, pressed, display
-  //three sections need to be adjusted
-  // Tab tabOfTimes;
-  // Tab tabOfPitch;
-  // Tab tabOfVel;
-
   Tab[] tabs;
   SideTab[] stabs;
   int nOfTabs = 3;
   int nOfStabs = 3;
 
-
-  Map(int _i, float _x, float _y) {
+  void init(int _i, float _x, float _y) {
     id = _i;
     xx = 0;
     yy = 0;
@@ -61,7 +53,25 @@ class Map {
     for (int i = 0; i < nOfStabs; i++) {
       stabs[i] = new SideTab(this, i, _colorOfStabs[i]);
     }
+
+    //slider for channel
+    sliderOfChannel =
+      cp5.addSlider("ch" + str(id))
+      .setPosition(xpos, ypos + len + scl / 8)
+      .setSize(100,10)
+      .setRange(0,15)
+      .setNumberOfTickMarks(16)
+      .showTickMarks(false)
+      .setCaptionLabel("midi ch")
+      .setColorBackground(_gbk);
+    ;
+
+
   }
+  Map(int _i, float _x, float _y) {
+    init(_i, _x, _y);
+  }
+
 
   void update() {
     for(int i = 0; i < nOfc; i++) {
@@ -74,7 +84,12 @@ class Map {
     nodes[xx][yy].trigger();
     //TODO the unit of angle
 
-    int ot = nodes[xx][yy].ot % 4;
+
+    int ot = nodes[xx][yy].ot;
+    while(ot < 0) {
+      ot += 4;
+    }
+    ot %= 4;
     switch(ot) {
       case 0 :
         xx = (xx + nOfc + 1) % nOfc;
@@ -163,7 +178,6 @@ class Map {
       }
     }
   }
-
   void mousePressed() {
     int c = floor((mX - margin)/ float(scl));
     int r = floor((mY - margin)/ float(scl));
@@ -186,6 +200,7 @@ class Map {
       }
     }
     else if (contain(mX, mY)) {
+      //tabs in upper bar
       if (r == -1){
         for (int i = 0; i < nOfTabs; i++) {
           if (c != i) {
@@ -196,11 +211,52 @@ class Map {
           }
         }
       }
+      //tabs in side bar
+      if (c == -1) {
+        if (r == ROTATE) {
+          stabs[ROTATE].trigger();
+        }
+        if (r == RANDOM) {
+
+          if (tabs[TIMES].active) { randomizeTimes(); }
+          else if (tabs[VELOCITY].active) { randomizeVelocity(); }
+          else if (tabs[PITCH].active){ randomizePitches(); }
+          else { randomizeOt(); }
+          //TODO other random function
+        }
+      }
     }
   }
-  void mouseWheel(float e) {
 
+  void randomizeOt() {
+    for(int i = 0; i < nOfc; i++) {
+      for(int j = 0; j < nOfc; j++) {
+        nodes[i][j].randomizeOt();
+      }
+    }
   }
+  void randomizeTimes() {
+    for(int i = 0; i < nOfc; i++) {
+      for(int j = 0; j < nOfc; j++) {
+        nodes[i][j].setTiming(floor(random(4)));
+      }
+    }
+  }
+  void randomizeVelocity() {
+    for(int i = 0; i < nOfc; i++) {
+      for(int j = 0; j < nOfc; j++) {
+        nodes[i][j].setVelocity(floor(random(7)));
+      }
+    }
+  }
+  void randomizePitches() {
+    for(int i = 0; i < nOfc; i++) {
+      for(int j = 0; j < nOfc; j++) {
+        nodes[i][j].setPitch(floor(random(pitchStep.length)));
+      }
+    }
+  }
+
   boolean contain(float x, float y) {
     return (x > 0)&&(x < len )&&(y > 0)&&(y < len);
   }
