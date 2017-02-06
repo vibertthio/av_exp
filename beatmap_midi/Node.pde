@@ -14,7 +14,7 @@ class Node {
   int xpos, ypos;
 
   float mainAlpha = 255;
-  float fadeRate = 0.05;
+  float fadeRate = 0.1;
 
   //TIMES
   int nOftiming = 1;
@@ -32,6 +32,23 @@ class Node {
   boolean active = false;
   boolean triggering = false;
 
+  Node(Map _m, int _x, int _y) {
+    map = _m;
+    pitch = floor(random(0, map.pitchStep.length));
+    canvas = map.canvas;
+    xpos = _x;
+    ypos = _y;
+    angle = 0;
+    ot = floor(random(4));
+
+    timerOfColor = new TimeLine(300);
+    timerOfColor.setLinerRate(2);
+    timerOfColor.set1();
+
+    timerOfDisplay = new TimeLine(300);
+    timerOfDisplay.setLinerRate(2);
+    timerOfDisplay.set1();
+  }
   Node(Map _m, int _x, int _y, int _midi) {
     map = _m;
     midiNote = _midi;
@@ -135,7 +152,9 @@ class Node {
     else { canvas.fill(_normal, 255 - mainAlpha); }
     canvas.translate(margin + scl / 4, margin + scl);
     canvas.translate(xpos * scl, ypos * scl);
-    canvas.rect(0, 0, scl / 2, -1 * map(getVelocity(), 0, 255, 0, scl));
+    canvas.noStroke();
+    canvas.rect(0, 0, scl / 2, -1 * map(getVelocity(), 0, 255, 0, scl),
+                scl / 5, scl / 5, 0, 0);
     canvas.popMatrix();
   }
   void pitchDisplay() {

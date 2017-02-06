@@ -24,6 +24,11 @@ color[] _colorOfTabs = {
   color (246, 36, 89),
   color (249, 191, 59),
 };
+color[] _colorOfStabs = {
+  color (211, 84, 0),
+  color (137, 196, 244),
+  color (236,100,75),
+};
 
 //state
 boolean activating = false;

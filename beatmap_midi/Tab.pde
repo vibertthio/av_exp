@@ -41,3 +41,20 @@ class Tab {
   }
 
 }
+
+class SideTab extends Tab {
+  SideTab(Map _m, int _p, color _c) {
+    super(_m, _p, _c);
+  }
+  void display() {
+    float al = active? 200 : ((mouseOver)?100:50);
+    alpha = alpha + 0.2 * (al - alpha);
+
+    canvas.pushMatrix();
+    canvas.noStroke();
+    canvas.fill(col, alpha);
+    canvas.translate(0, margin + pos * scl);
+    canvas.rect(0, padding, h, w);
+    canvas.popMatrix();
+  }
+}

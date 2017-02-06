@@ -19,6 +19,9 @@ class Map {
   //state
   boolean mouseOver = false;
 
+  //modes
+  boolean rotating = false;
+
   //sense, pressed, display
   //three sections need to be adjusted
   // Tab tabOfTimes;
@@ -26,7 +29,9 @@ class Map {
   // Tab tabOfVel;
 
   Tab[] tabs;
+  SideTab[] stabs;
   int nOfTabs = 3;
+  int nOfStabs = 3;
 
 
   Map(int _i, float _x, float _y) {
@@ -42,7 +47,7 @@ class Map {
 
     for(int i = 0; i < nOfc; i++) {
       for(int j = 0; j < nOfc; j++) {
-        nodes[i][j] = new Node(this, i, j, midiNotes[id]);
+        nodes[i][j] = new Node(this, i, j);
         nodes[i][j].setOt(otDefault[j * nOfc + i]);
       }
     }
@@ -51,6 +56,10 @@ class Map {
     tabs = new Tab[nOfTabs];
     for (int i = 0; i < nOfTabs; i++) {
       tabs[i] = new Tab(this, i, _colorOfTabs[i]);
+    }
+    stabs = new SideTab[nOfStabs];
+    for (int i = 0; i < nOfStabs; i++) {
+      stabs[i] = new SideTab(this, i, _colorOfStabs[i]);
     }
   }
 
@@ -125,6 +134,9 @@ class Map {
     for (int i = 0; i < nOfTabs; i++) {
       tabs[i].display();
     }
+    for (int i = 0; i < nOfStabs; i++) {
+      stabs[i].display();
+    }
   }
   void mouseSensed(float _mX, float _mY) {
     mX = _mX - xpos;
@@ -137,9 +149,18 @@ class Map {
       for (int i = 0; i < nOfTabs; i++) {
         tabs[i].mouseOver = (c == i && r == -1);
       }
+      for (int i = 0; i < nOfStabs; i++) {
+        stabs[i].mouseOver = (c == -1 && r == i);
+      }
     }
     else {
       mouseOver = false;
+      for (int i = 0; i < nOfTabs; i++) {
+        tabs[i].mouseOver = false;
+      }
+      for (int i = 0; i < nOfStabs; i++) {
+        stabs[i].mouseOver = false;
+      }
     }
   }
 
