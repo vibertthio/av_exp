@@ -1,0 +1,134 @@
+#N canvas 960 23 960 1151 10;
+#X obj 44 58 unpackOSC;
+#X obj 43 85 print OSCpack;
+#X obj 44 33 udpreceive 12002;
+#X obj 134 83 route /m0 /m1 /m2 /m3 /m4 /m5;
+#X obj 42 749 catch~ output;
+#X obj 42 918 dac~;
+#X obj 135 109 s m0;
+#X obj 269 112 s m0;
+#X obj 302 112 s m0;
+#X obj 169 111 s m1;
+#X obj 202 110 s m2;
+#X obj 42 786 mono-EQ7;
+#X obj 332 216 cnv 15 300 210 empty empty 20 12 0 0 4 -4034 -262144
+0;
+#X obj 341 229 r m1;
+#X obj 341 394 throw~ output;
+#X obj 32 216 cnv 15 290 210 empty empty empty 20 12 0 14 -159808 -66577
+0;
+#X obj 42 376 throw~ output;
+#X obj 42 234 r m0;
+#X obj 640 216 cnv 15 290 210 empty empty empty 20 12 0 14 -261234
+-66577 0;
+#X obj 648 388 throw~ output;
+#X obj 648 225 r m2;
+#N canvas 414 137 405 288 env 0;
+#X obj 76 85 line;
+#X obj 136 57 delay 300;
+#X msg 136 79 0.3 700;
+#X msg 76 56 0.8 300;
+#X msg 76 116 3 \$1;
+#X obj 74 12 inlet;
+#X obj 76 150 outlet;
+#X connect 0 0 4 0;
+#X connect 1 0 2 0;
+#X connect 2 0 0 0;
+#X connect 3 0 0 0;
+#X connect 4 0 6 0;
+#X connect 5 0 3 0;
+#X connect 5 0 1 0;
+#X restore 705 246 pd env;
+#N canvas 1265 675 450 300 savedata 0;
+#X msg 10 30 \; SSSAD /hh/controls 0 0.835593 1 0.884746 2 0.409322
+3 0.471429 4 0.650508 5 0.24661 6 0.383051 7 0.4 \; SSSAD_ADMIN set
+\; SSSAD /hh/controls 0 0.835593 1 0.884746 2 0.409322 3 0.785637 4
+0.650508 5 0.24661 6 0.383051 7 0.4 \; SSSAD /hh/controls 0 0.835593
+1 0.884746 2 0.409322 3 0.781402 4 0.650508 5 0.24661 6 0.383051 7
+0.4 \; SSSAD /hh/controls 0 0.835593 1 0.884746 2 0.409322 3 0.342857
+4 0.650508 5 0.24661 6 0.383051 7 0.4 \; SSSAD /hh/controls 0 0.835593
+1 0.884746 2 0.409322 3 0.8 4 0.650508 5 0.24661 6 0.383051 7 0.4 \;
+SSSAD /hh/controls 0 0.835593 1 0.884746 2 0.409322 3 0.75691 4 0.650508
+5 0.24661 6 0.383051 7 0.4 \; SSSAD /hh/controls 0 0.835593 1 0.884746
+2 0.409322 3 0.7 4 0.650508 5 0.24661 6 0.383051 7 0.4 \;;
+#X obj 10 10 inlet;
+#X msg 68 6 set;
+#X connect 1 0 0 0;
+#X connect 2 0 0 0;
+#X restore 834 296 pd savedata;
+#N canvas 1265 675 450 300 savedata 0;
+#X msg 10 30 \; SSSAD /bd/controls 0 0 1 0.21 2 1 3 0.1 4 0 5 0.8 6
+0.35 7 0.8 \; SSSAD_ADMIN set \; SSSAD /bd/controls 0 0 1 0.21 2 1
+3 0.1 4 0 5 0.8 6 0.35 7 0.8 \; SSSAD /bd/controls 0 0 1 0.21 2 1 3
+0.1 4 0 5 0.8 6 0.35 7 0.8 \; SSSAD /bd/controls 0 0.4 1 0.4 2 0.4
+3 0.4 4 0.7 5 0.7 6 0.49 7 0.49 \; SSSAD /bd/controls 0 0 1 0.21 2
+1 3 0.1 4 0 5 0.8 6 0.35 7 0.8 \; SSSAD /bd/controls 0 0 1 0.21 2 1
+3 0.1 4 0 5 0.8 6 0.35 7 0.8 \; SSSAD /bd/controls 0 0 1 0.21 2 1 3
+0.1 4 0 5 0.8 6 0.35 7 0.8 \;;
+#X obj 10 10 inlet;
+#X msg 68 6 set;
+#X connect 1 0 0 0;
+#X connect 2 0 0 0;
+#X restore 230 302 pd savedata;
+#X obj 230 232 808_local /bd;
+#X obj 834 226 808_local /hh;
+#X obj 646 266 perk-andyHat /hh;
+#X obj 42 259 perk-bassdrum /bd;
+#N canvas 1265 675 450 300 savedata 0;
+#X msg 10 30 \; SSSAD /sn/controls 0 0.49 1 0.647458 2 0.479661 3 0.294915
+4 0.227966 5 0.403051 6 0.0847458 7 0.447458 8 0.434746 9 0.61 \; SSSAD_ADMIN
+set \; SSSAD /sn/controls 0 0.49 1 0.647458 2 0.479661 3 0.294915 4
+0.227966 5 0.403051 6 0.0847458 7 0.447458 8 0.434746 9 0.61 \; SSSAD
+/sn/controls 0 0.49 1 0.647458 2 0.479661 3 0.294915 4 0.227966 5 0.403051
+6 0.0847458 7 0.447458 8 0.434746 9 0.61 \; SSSAD /sn/controls 0 0.49
+1 0.647458 2 0.479661 3 0.294915 4 0.227966 5 0.403051 6 0.0847458
+7 0.447458 8 0.434746 9 0.61 \;;
+#X obj 10 10 inlet;
+#X msg 68 6 set;
+#X connect 1 0 0 0;
+#X connect 2 0 0 0;
+#X restore 533 300 pd savedata;
+#X obj 533 230 808_local /sn;
+#X obj 341 251 perk-snare /sn;
+#X obj 34 439 cnv 15 290 210 empty empty empty 20 12 0 14 -260097 -66577
+0;
+#X obj 44 599 throw~ output;
+#N canvas 1265 675 450 300 savedata 0;
+#X msg 10 30 \; SSSAD /cl/controls 0 0.787288 1 0.555932 2 0.238983
+3 0.692373 4 0.638983 5 0.672881 6 0.352712 7 0.333898 \; SSSAD_ADMIN
+set \;;
+#X obj 10 10 inlet;
+#X msg 68 6 set;
+#X connect 1 0 0 0;
+#X connect 2 0 0 0;
+#X restore 232 525 pd savedata;
+#X obj 44 457 r m3;
+#X obj 236 111 s m3;
+#X obj 232 455 808_local /cl;
+#X obj 44 482 perk-clap /cl;
+#X connect 0 0 1 0;
+#X connect 0 0 3 0;
+#X connect 2 0 0 0;
+#X connect 3 0 6 0;
+#X connect 3 1 9 0;
+#X connect 3 2 10 0;
+#X connect 3 3 35 0;
+#X connect 4 0 11 0;
+#X connect 11 0 5 0;
+#X connect 11 0 5 1;
+#X connect 13 0 30 0;
+#X connect 13 0 30 0;
+#X connect 17 0 27 0;
+#X connect 20 0 21 0;
+#X connect 20 0 26 0;
+#X connect 21 0 26 1;
+#X connect 24 0 23 0;
+#X connect 25 0 22 0;
+#X connect 26 0 19 0;
+#X connect 27 0 16 0;
+#X connect 29 0 28 0;
+#X connect 30 0 14 0;
+#X connect 34 0 37 0;
+#X connect 36 0 33 0;
+#X connect 37 0 32 0;
+#X coords 0 1151 1 1150 0 0 0;
