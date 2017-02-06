@@ -4,6 +4,10 @@ import netP5.*;
 OscP5 oscP5;
 NetAddress other;
 
+//midi output
+import themidibus.*;
+MidiBus midi;
+
 //constant
 color _bk = color (50, 50, 50);
 color _gbk = color (80, 80, 80);
@@ -46,6 +50,9 @@ void setup() {
   //oscP5
   oscP5 = new OscP5(this, 12000);
   other = new NetAddress("127.0.0.1", 12002);
+
+  //midi
+  midi = new MidiBus(this, 0, 4);
 }
 
 void draw() {

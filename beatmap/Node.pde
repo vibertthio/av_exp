@@ -15,6 +15,7 @@ class Node {
 
   int nOftiming = 1;
   int timingCount = 0;
+  int midi = 
 
   //state
   boolean active = false;
@@ -45,6 +46,7 @@ class Node {
         else if (timerOfTiming.liner() == 1) {
           timingCount++;
           sendOSC();
+          sendMIDI();
           timerOfTiming.startTimer();
         }
       }
@@ -98,13 +100,22 @@ class Node {
     if (active) {
       timingCount++;
       sendOSC();
+      sendMIDI();
     }
   }
   void sendOSC() {
     OscMessage msg = new OscMessage("/m" + str(map.id));
     oscP5.send(msg, other);
   }
+  void sendMIDI() {
+    int channel = 1;
+    int pitch = 0x24;
+    int velocity = 0x28;
 
+    midi.sendNoteOn(channel, pitch, velocity); // Send a Midi noteOn
+    delay(10);
+    midi.sendNoteOff(channel, pitch, velocity); // Send a Midi nodeOff
+  }
   //parameter adjustment
   void setTiming() {
     nOftiming = (nOftiming % 4) + 1;
