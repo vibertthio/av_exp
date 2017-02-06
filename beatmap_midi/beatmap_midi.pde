@@ -31,11 +31,13 @@ color[] _colorOfTabs = {
   color (27, 163, 156),
   color (246, 36, 89),
   color (249, 191, 59),
+  color (135, 211, 124),
 };
 color[] _colorOfStabs = {
   color (211, 84, 0),
   color (137, 196, 244),
-  color (236,100,75),
+  color (239, 72, 54),
+  color (220, 198, 224),
 };
 
 //state

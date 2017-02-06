@@ -23,8 +23,8 @@ class Map {
   //sense, pressed, display
   Tab[] tabs;
   SideTab[] stabs;
-  int nOfTabs = 3;
-  int nOfStabs = 3;
+  int nOfTabs = 4;
+  int nOfStabs = 4;
 
   void init(int _i, float _x, float _y) {
     id = _i;
