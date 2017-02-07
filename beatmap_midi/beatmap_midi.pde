@@ -82,6 +82,10 @@ int[] channels = {
 
 ArrayList<Map> maps;
 
+PFont pfont;
+ControlFont font;
+
+
 void setup() {
   // size(1080, 720);
   size(800, 550);
@@ -99,6 +103,11 @@ void setup() {
   //controlP5
   cp5 = new ControlP5(this);
 
+  //font
+  pfont = createFont("Arial",12,true);
+  font = new ControlFont(pfont,8);
+  textFont(pfont);
+
   //maps
   maps = new ArrayList<Map>();
   for (int i = 0; i < 6; i++) {
@@ -106,6 +115,7 @@ void setup() {
                       ((1+i%3) * gap + len * (i%3)),
                       (1+i/3) * gap + len * (i/3)));
   }
+
 }
 void draw() {
   background(_bk);

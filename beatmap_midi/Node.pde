@@ -23,10 +23,12 @@ class Node {
   //VELOCITY
   int vel = 1; //64 per unit
 
-
   //PITCH
   boolean fixedPitch = false;
   int pitch;
+
+  //OCTAVE
+  int oct;
 
   //state
   boolean active = false;
@@ -34,12 +36,12 @@ class Node {
 
   void init(Map _m, int _x, int _y) {
     map = _m;
-    pitch = floor(random(0, map.pitchStep.length));
+    pitch = 2;
     canvas = map.canvas;
     xpos = _x;
     ypos = _y;
     angle = 0;
-    ot = floor(random(4));
+    ot = 0;
 
     timerOfColor = new TimeLine(300);
     timerOfColor.setLinerRate(2);
@@ -61,7 +63,8 @@ class Node {
     float al;
     if (map.tabs[TIMES].active ||
         map.tabs[VELOCITY].active ||
-        map.tabs[PITCH].active )
+        map.tabs[PITCH].active ||
+        map.tabs[OCTAVE].active )
         { al = 0; }
     else { al = 255; }
 
@@ -77,6 +80,9 @@ class Node {
     }
     else if (map.tabs[PITCH].active) {
       pitchDisplay();
+    }
+    else if (map.tabs[OCTAVE].active) {
+      octaveDisplay();
     }
     shapeDisplay();
     blinkDisplay();
@@ -167,6 +173,41 @@ class Node {
     canvas.rect(0, 0, scl, scl);
     canvas.popMatrix();
   }
+  void octaveDisplay() {
+    canvas.pushMatrix();
+    if (active) { canvas.fill(_active, 255 - mainAlpha); }
+    else { canvas.fill(_normal, 255 - mainAlpha); }
+
+    canvas.translate(margin + scl / 2, margin);
+    canvas.translate(xpos * scl, ypos * scl);
+    canvas.noStroke();
+    canvas.rectMode(CENTER);
+
+    float gap = scl / float(oct + 2);
+    for (int i = 0; i <= oct; i++) {
+      canvas.rect(0, gap * (i + 1), scl / 2, scl / 8);
+    }
+    // switch(oct) {
+    //   case 0 :
+    //     // canvas.ellipse(0, 0, scl / 2, scl / 2);
+    //
+    //     break;
+    //   case 1 :
+    //     canvas.ellipse(scl / 5, 0, scl / 3, scl / 3);
+    //     canvas.ellipse(-1 * scl / 5, 0, scl / 3, scl / 3);
+    //     break;
+    //   case 2 :
+    //     canvas.ellipse(scl / 5, 0, scl / 4, scl / 4);
+    //     canvas.ellipse(-1 * scl / 5, scl / 5, scl / 4, scl / 4);
+    //     canvas.ellipse(-1 * scl / 5, -1 * scl / 5, scl / 4, scl / 4);
+    //     break;
+    //   default :
+    //     canvas.ellipse(0, 0, scl / 2, scl / 2);
+    //     break;
+    // }
+    canvas.rectMode(CORNER);
+    canvas.popMatrix();
+  }
 
   //signal
   void activate() {
@@ -210,9 +251,18 @@ class Node {
     int pit = getPitch();
     int vel = getVelocity();
 
-    midi.sendNoteOn(ch, pit, vel); // Send a Midi noteOn
-    delay(10);
-    midi.sendNoteOff(ch, pit, vel); // Send a Midi nodeOff
+    if (oct > 0) {
+      midi.sendNoteOn(ch, pit, vel); // Send a Midi noteOn
+      midi.sendNoteOn(ch, pit + oct * 12, vel);
+      delay(10);
+      midi.sendNoteOff(ch, pit, vel); // Send a Midi nodeOff
+      midi.sendNoteOff(ch, pit + oct * 12, vel);
+    }
+    else {
+      midi.sendNoteOn(ch, pit, vel); // Send a Midi noteOn
+      delay(10);
+      midi.sendNoteOff(ch, pit, vel); // Send a Midi nodeOff
+    }
   }
   //parameter adjustment
   void setTiming() {
@@ -239,7 +289,12 @@ class Node {
   int getPitch() {
     return map.pitchStep[pitch];
   }
-
+  void setOct() {
+    oct = (oct + 1) % 3;
+  }
+  void setOct(int i) {
+    oct = i % 3;
+  }
 
   //utility
   void setOt(int _o) {

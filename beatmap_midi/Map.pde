@@ -54,6 +54,7 @@ class Map {
       stabs[i] = new SideTab(this, i, _colorOfStabs[i]);
     }
 
+
     //slider for channel
     sliderOfChannel =
       cp5.addSlider("ch" + str(id))
@@ -63,7 +64,11 @@ class Map {
       .setNumberOfTickMarks(16)
       .showTickMarks(false)
       .setCaptionLabel("midi ch")
-      .setColorBackground(_gbk);
+      .setColorBackground(_gbk)
+    ;
+    sliderOfChannel
+      .getCaptionLabel()
+      .setFont(font)
     ;
 
 
@@ -194,6 +199,9 @@ class Map {
       }
       else if (tabs[PITCH].active) {
         node.setPitch();
+      }
+      else if (tabs[OCTAVE].active) {
+        node.setOct();
       }
       else {
         node.rotateClockwise();
