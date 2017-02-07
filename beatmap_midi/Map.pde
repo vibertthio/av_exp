@@ -60,7 +60,7 @@ class Map {
       cp5.addSlider("ch" + str(id))
       .setPosition(xpos, ypos + len + scl / 8)
       .setSize(100,10)
-      .setRange(0,15)
+      .setRange(1,16)
       .setNumberOfTickMarks(16)
       .showTickMarks(false)
       .setCaptionLabel("midi ch")
@@ -70,7 +70,6 @@ class Map {
       .getCaptionLabel()
       .setFont(font)
     ;
-
 
   }
   Map(int _i, float _x, float _y) {

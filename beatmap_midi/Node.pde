@@ -247,7 +247,7 @@ class Node {
     oscP5.send(msg, other);
   }
   void sendMIDI() {
-    int ch = floor(map.sliderOfChannel.getValue());
+    int ch = floor(map.sliderOfChannel.getValue()) - 1;
     int pit = getPitch();
     int vel = getVelocity();
 
