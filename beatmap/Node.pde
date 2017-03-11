@@ -15,7 +15,7 @@ class Node {
 
   int nOftiming = 1;
   int timingCount = 0;
-  int midi = 
+  // int midi = 
 
   //state
   boolean active = false;
