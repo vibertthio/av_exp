@@ -1,0 +1,17 @@
+{
+  "name": "webvr",
+  "version": "1.0.0",
+  "description": "the development of some simple webvr, using a-frame framework.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "webvr"
+  ],
+  "author": "Vibert Thio",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^3.17.1"
+  }
+}
