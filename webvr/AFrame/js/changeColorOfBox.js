@@ -1,4 +1,4 @@
-const boxes = document.getElementsByClassName('box');
+const bs = document.getElementsByClassName('box');
 
 
 // let clicked = false;
@@ -22,8 +22,8 @@ const changeColor = (e) => {
   }
 };
 
-for (let i = 0, n = boxes.length; i < n; i += 1) {
-  const box = boxes[i];
+for (let i = 0, n = bs.length; i < n; i += 1) {
+  const box = bs[i];
   box.addEventListener('click', changeColor);
   box.addEventListener('touchstart', changeColor);
 }

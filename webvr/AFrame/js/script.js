@@ -29,17 +29,14 @@ function createNewBox(x, y, z) {
   return b;
 }
 
-
+const boxes = [];
 for (let i = 0; i < 4; i += 1) {
   for (let j = 0; j < 4; j += 1) {
     const newBox = createNewBox(-6 + (4 * i), 1 + (2 * j), -8);
+    boxes[(i * 4) + j] = newBox;
     ascene.appendChild(newBox);
   }
 }
-
-ascene.addEventListener('click', () => {
-  
-});
 
 // ascene.addEventListener('click', () => {
 //   // const newBox = createNewBox(0, 2, -5);
