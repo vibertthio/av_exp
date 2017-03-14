@@ -1,6 +1,7 @@
 /* global boxes*/
 /* no-unused-vars: 'off' */
 
+
 const bs = document.getElementsByClassName('box');
 
 /**
