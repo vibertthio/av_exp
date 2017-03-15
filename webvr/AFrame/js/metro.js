@@ -1,4 +1,4 @@
-/* global boxes checkSelected audioContext */
+/* global boxes checkSelected ac */
 const notesInQueue = [];      // the notes that have been put into the web audio,
 
 /**
@@ -24,6 +24,14 @@ function Metro(ac) {
   this.tempo = 120.0;          // tempo (in beats per minute)
   this.noteResolution = 0;     // 0 == 16th, 1 == 8th, 2 == quarter note
 
+
+  //
+  const osc = this.audioContext.createOscillator();
+  osc.connect(this.audioContext.destination);
+  osc.frequency.value = 1000.0;
+  const t = this.audioContext.currentTime;
+  osc.start(t);
+  osc.stop(t+0.5);
 
   /** Methods **/
 
@@ -139,5 +147,5 @@ function Metro(ac) {
   this.draw = () => {};
 }
 
-const metro = new Metro(audioContext);
+const metro = new Metro(ac);
 metro.play();
