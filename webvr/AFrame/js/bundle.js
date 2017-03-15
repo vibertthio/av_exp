@@ -14,8 +14,10 @@ g.connect(ac.destination)
 
 
 wai(document.body, ac, function (unlocked) {
-  console.log('boop\'d yah')
-  osc.start(ac.currentTime)
+  console.log('boop\'d yah');
+  var time = ac.currentTime;
+  osc.start(time)
+  osc.stop(time + 0.5)
 })
 
 
