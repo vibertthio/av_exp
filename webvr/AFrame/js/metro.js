@@ -1,14 +1,15 @@
-/* global boxes checkSelected */
+/* global boxes checkSelected audioContext */
 const notesInQueue = [];      // the notes that have been put into the web audio,
 
 /**
-/ Constructor function for Metro object
+* Constructor function for Metro object.
+* @param {AudioContext} ac the global audio context.
 */
-function Metro() {
+function Metro(ac) {
   /** Data Members **/
 
   // Constants
-  this.audioContext = new AudioContext();
+  this.audioContext = ac;
   this.lookahead = 25.0;       // How frequently to call scheduling function
   this.scheduleAheadTime = 0.1;    // How far ahead to schedule audio (sec)
   this.noteLength = 0.05;      // length of "beep" (in seconds)
@@ -138,5 +139,5 @@ function Metro() {
   this.draw = () => {};
 }
 
-const metro = new Metro();
+const metro = new Metro(audioContext);
 metro.play();
