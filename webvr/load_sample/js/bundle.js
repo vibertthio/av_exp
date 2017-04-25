@@ -15,11 +15,7 @@ g.connect(ac.destination)
 
 wai(document.body, ac, function (unlocked) {
   console.log('boop\'d yah');
-  var time = ac.currentTime;
-  osc.start(time)
-  osc.stop(time + 0.5)
-})
-
+});
 
 },{"./":2}],2:[function(require,module,exports){
 module.exports = function (el, ac, cb) {

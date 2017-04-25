@@ -1,4 +1,4 @@
-/* global boxes checkSelected ac AudioSmapleLoader */
+/* global boxes checkSelected ac AudioSmapleLoader*/
 const notesInQueue = [];      // the notes that have been put into the web audio,
 
 /**
@@ -88,6 +88,9 @@ function Metro(ac) {
     const osc = this.audioContext.createOscillator();
     osc.connect(this.audioContext.destination);
 
+    const src = this.audioContext.createBufferSource();
+    src.connect(this.audioContext.destination);
+
     /**
     * TODO
     * Insert the action here.
@@ -106,19 +109,36 @@ function Metro(ac) {
       }
 
       // Beat
+      // if (checkSelected(box)) {
+      //   if (beat === 0) {
+      //     osc.frequency.value = 880.0;
+      //   } else if (beat % 4 === 0) {
+      //     osc.frequency.value = 440.0;
+      //   } else {
+      //     osc.frequency.value = 220.0;
+      //   }
+      //
+      //   osc.start(time);
+      //   osc.stop(time + this.noteLength);
+      // }
+
       if (checkSelected(box)) {
-        if (beat === 0) {
-          osc.frequency.value = 880.0;
-        } else if (beat % 4 === 0) {
-          osc.frequency.value = 440.0;
+
+
+        if (beat === 8) {
+          src.buffer = loader.response[0];
+        } else if (beat === 0) {
+          src.buffer = loader.response[2];
         } else {
-          osc.frequency.value = 220.0;
+          src.buffer = loader.response[1];
         }
 
-        osc.start(time);
-        osc.stop(time + this.noteLength);
+        src.start(time);
+        src.stop(time + 2);
       }
     }
+
+    // Play Smaples
   };
 
   /**
