@@ -4,7 +4,8 @@
   "description": "the development of some simple webvr, using a-frame framework.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "serve ."
   },
   "keywords": [
     "webvr"
@@ -17,7 +18,8 @@
     "eslint-config-airbnb": "^14.1.0",
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jsx-a11y": "^4.0.0",
-    "eslint-plugin-react": "^6.10.0"
+    "eslint-plugin-react": "^6.10.0",
+    "serve": "^5.1.4"
   },
   "dependencies": {
     "web-audio-ios": "^1.0.2"

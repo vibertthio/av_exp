@@ -6,24 +6,18 @@ const ascene = document.getElementsByClassName('scene')[0];
  * @param {number} x the x of position.
  * @param {number} y the y of position.
  * @param {number} z the z of position.
+ * @param {number} angle the rotation of y-axis.
+ * @param {number} size the size of cube.
  * @return {Element} a-box item.
  */
-function createNewBox(x, y, z) {
+function createNewBox(x, y, z, angle = 0, size = 0.5) {
   const b = document.createElement('a-box');
   b.setAttribute('class', 'box');
   b.setAttribute('src', '#textureOfBox');
   b.setAttribute('opacity', '1');
-  b.setAttribute('scale', '1 1 1');
+  b.setAttribute('scale', `${size} ${size} ${size}`);
   b.setAttribute('position', `${x} ${y} ${z}`);
-  b.setAttribute('rotation', '0 0 45');
-  // b.setAttribute('rotation', '0 45 45');
-  // b.innerHTML = `<a-animation
-  //   attribute="scale"
-  //   begin="mouseenter"
-  //   dur="300"
-  //   to="1.1 1.1 1.1"></a-animation>
-  //   <a-animation attribute="scale" begin="mouseleave" dur="300" to="1 1 1"></a-animation>`
-  // ;
+  b.setAttribute('rotation', `0 ${angle} 45`);
 
   b.innerHTML = `<a-animation
                    attribute="position"
@@ -36,31 +30,36 @@ function createNewBox(x, y, z) {
                    attribute="scale"
                    begin="mouseenter"
                    dur="300"
-                   to="1.2 1.2 1.2">
+                   to="${size * 1.2} ${size * 1.2} ${size * 1.2}">
                  </a-animation>'
                  <a-animation
                    attribute="scale"
                    begin="mouseleave"
                    dur="300"
-                   to="1 1 1">
+                   to="${size} ${size} ${size}">
                  </a-animation>`
   ;
   return b;
 }
 
-const boxes = [];
-for (let i = 0; i < 4; i += 1) {
-  for (let j = 0; j < 4; j += 1) {
-    const newBox = createNewBox(-6 + (4 * i), 1 + (2 * j), -8);
-    boxes[(i * 4) + j] = newBox;
-    ascene.appendChild(newBox);
+// const numberOfLayers = 3;
+const numberOfBoxes = 16;
+const allBoxes = [];
+
+// drums
+for (let k = 0; k < 7; k += 1) {
+  allBoxes[k] = [];
+  if (k < 3) {
+    for (let i = 0; i < numberOfBoxes; i += 1) {
+      const newBox = createNewBox(-7.5 + (1.0 * i), 1 + (1.0 * k), -8);
+      allBoxes[k][i] = newBox;
+      ascene.appendChild(newBox);
+    }
+  } else if (k < 7) {
+    for (let i = 0; i < 4; i += 1) {
+      const newBox = createNewBox(10, 1 + (2.0 * (k - 3)), -4 + (2.0 * i), 90, 1);
+      allBoxes[k][i] = newBox;
+      ascene.appendChild(newBox);
+    }
   }
 }
-
-// ascene.addEventListener('click', () => {
-//   // const newBox = createNewBox(0, 2, -5);
-//   const newBox = createNewBox((Math.random() * 4) - 2,
-//                               (Math.random() * 2) - 1,
-//                               -10);
-//   ascene.appendChild(newBox);
-// });

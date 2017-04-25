@@ -1,4 +1,13 @@
-/* global boxes checkSelected ac AudioSmapleLoader*/
+/* global
+   allBoxes
+   checkSelected
+   ac
+   AudioSmapleLoader
+   loader
+   bassDrum
+   snareDrum
+   hihatDrum
+   arpySound */
 const notesInQueue = [];      // the notes that have been put into the web audio,
 
 /**
@@ -84,61 +93,17 @@ function Metro(ac) {
     if ((this.noteResolution === 1) && (beatNumber % 2)) { return; }
     if ((this.noteResolution === 2) && (beatNumber % 4)) { return; }
 
-    // create an oscillator
-    const osc = this.audioContext.createOscillator();
-    osc.connect(this.audioContext.destination);
-
-    const src = this.audioContext.createBufferSource();
-    src.connect(this.audioContext.destination);
-
     /**
     * TODO
     * Insert the action here.
     */
-    if (boxes) {
-      const beat = beatNumber % 16;
-      const box = boxes[beat];
-
-      // Animation
-      box.setAttribute('color', 'red');
-      const prev = boxes[(beat > 0) ? (beat - 1) : 15];
-      if (!checkSelected(prev)) {
-        prev.setAttribute('color', 'white');
-      } else {
-        prev.setAttribute('color', 'green');
-      }
-
-      // Beat
-      // if (checkSelected(box)) {
-      //   if (beat === 0) {
-      //     osc.frequency.value = 880.0;
-      //   } else if (beat % 4 === 0) {
-      //     osc.frequency.value = 440.0;
-      //   } else {
-      //     osc.frequency.value = 220.0;
-      //   }
-      //
-      //   osc.start(time);
-      //   osc.stop(time + this.noteLength);
-      // }
-
-      if (checkSelected(box)) {
-
-
-        if (beat === 8) {
-          src.buffer = loader.response[0];
-        } else if (beat === 0) {
-          src.buffer = loader.response[2];
-        } else {
-          src.buffer = loader.response[1];
-        }
-
-        src.start(time);
-        src.stop(time + 2);
-      }
-    }
-
-    // Play Smaples
+    bassDrum(beatNumber, time, this.audioContext, 0);
+    snareDrum(beatNumber, time, this.audioContext, 1);
+    hihatDrum(beatNumber, time, this.audioContext, 2);
+    arpySound(beatNumber, time, this.audioContext, 3, 0);
+    arpySound(beatNumber, time, this.audioContext, 4, 1);
+    arpySound(beatNumber, time, this.audioContext, 5, 2);
+    arpySound(beatNumber, time, this.audioContext, 6, 3);
   };
 
   /**
@@ -160,6 +125,7 @@ function Metro(ac) {
   */
   this.draw = () => {};
 }
+
 
 const metro = new Metro(ac);
 metro.play();
