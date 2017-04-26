@@ -1,3 +1,5 @@
+/* global ascene */
+
 /**
  * Create a-box item.
  * @param {number} x the x of position.
@@ -5,34 +7,30 @@
  * @param {number} z the z of position.
  * @return {Element} a-box item.
  */
-function createNewBox(x, y, z) {
-  const b = document.createElement('a-box');
-  b.setAttribute('class', 'box');
-  b.setAttribute('src', '#textureOfBox');
-  b.setAttribute('opacity', '1');
-  b.setAttribute('scale', '1 1 1');
+function createBlinkBox(x, y, z) {
+  const b = document.createElement('a-entity');
+  b.setAttribute('geometry', 'primitive:box');
+  b.setAttribute('material', 'shader:gif; src:url(https://static.wixstatic.com/media/ce4176_0cae568e79384307a5580d45973e06be.gif);');
+  b.setAttribute('gif', '');
   b.setAttribute('position', `${x} ${y} ${z}`);
-  b.setAttribute('rotation', `0 0 45`);
+  b.setAttribute('scale', '3 3 3');
 
-  b.innerHTML = `<a-animation
-                   attribute="position"
-                   to="${x + (Math.random() * 0.5)} ${y - (Math.random() * 0.5)} ${z + (Math.random() * 0.5)}"
-                   direction="alternate"
-                   dur="${(Math.random() * 500) + 1000}"
-                   repeat="indefinite">
-                 </a-animation>
-                 <a-animation
-                   attribute="scale"
-                   begin="mouseenter"
-                   dur="300"
-                   to="1.2 1.2 1.2">
-                 </a-animation>'
-                 <a-animation
-                   attribute="scale"
-                   begin="mouseleave"
-                   dur="300"
-                   to="1 1 1">
-                 </a-animation>`
-  ;
   return b;
 }
+
+ascene.appendChild(createBlinkBox(0.4, 12, -15));
+ascene.appendChild(createBlinkBox(-1.9, 9, -15));
+ascene.appendChild(createBlinkBox(-4.2, 6, -15));
+ascene.appendChild(createBlinkBox(-6.5, 3, -15));
+ascene.appendChild(createBlinkBox(-8.7, 6, -15));
+ascene.appendChild(createBlinkBox(-10.9, 9, -15));
+ascene.appendChild(createBlinkBox(-12.1, 12, -15));
+
+ascene.appendChild(createBlinkBox(0, 3, -15));
+
+ascene.appendChild(createBlinkBox(9.2, 3, -15));
+ascene.appendChild(createBlinkBox(9.2, 6, -15));
+ascene.appendChild(createBlinkBox(9.2, 9, -15));
+ascene.appendChild(createBlinkBox(9.2, 12, -15));
+ascene.appendChild(createBlinkBox(6.2, 12, -15));
+ascene.appendChild(createBlinkBox(12.2, 12, -15));

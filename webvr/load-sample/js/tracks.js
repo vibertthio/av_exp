@@ -117,13 +117,13 @@ function arpySound(beatNumber, time, audioContext, controlId, note) {
     const src = audioContext.createBufferSource();
     src.connect(audioContext.destination);
 
-    const beat = beatNumber % 4;
+    const beat = beatNumber % 16;
     const box = boxes[beat];
 
     // Animation
     if (box) {
       box.setAttribute('color', 'red');
-      const prev = boxes[(beat > 0) ? (beat - 1) : 3];
+      const prev = boxes[(beat > 0) ? (beat - 1) : 15];
       if (!checkSelected(prev)) {
         prev.setAttribute('color', 'white');
       } else {
