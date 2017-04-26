@@ -31,7 +31,7 @@ function createNewBox(x, y, z, angle = 0, size = 0.5) {
                    begin="mouseenter"
                    dur="300"
                    to="${size * 1.2} ${size * 1.2} ${size * 1.2}">
-                 </a-animation>'
+                 </a-animation>
                  <a-animation
                    attribute="scale"
                    begin="mouseleave"
@@ -51,13 +51,18 @@ for (let k = 0; k < 7; k += 1) {
   allBoxes[k] = [];
   if (k < 3) {
     for (let i = 0; i < numberOfBoxes; i += 1) {
-      const newBox = createNewBox(-7.5 + (1.0 * i), 1 + (1.0 * k), -8);
+      const newBox = createNewBox(-7.5 + (1.0 * i), 1 + (1.0 * k), -8, 0, 0.5);
       allBoxes[k][i] = newBox;
       ascene.appendChild(newBox);
     }
   } else if (k < 7) {
-    for (let i = 0; i < 4; i += 1) {
-      const newBox = createNewBox(10, 1 + (2.0 * (k - 3)), -4 + (2.0 * i), 90, 1);
+    for (let i = 0; i < numberOfBoxes; i += 1) {
+      const radius = 10;
+      const x = radius * Math.sin((Math.PI / 2) - ((Math.PI * i) / numberOfBoxes));
+      const z = radius * Math.cos((Math.PI / 2) - ((Math.PI * i) / numberOfBoxes));
+      const y = -2 + k;
+      // const newBox = createNewBox(x, y, z);
+      const newBox = createNewBox(x, y, z, ((180 * ((numberOfBoxes / 2) - i)) / numberOfBoxes));
       allBoxes[k][i] = newBox;
       ascene.appendChild(newBox);
     }
