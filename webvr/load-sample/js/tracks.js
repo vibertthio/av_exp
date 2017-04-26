@@ -110,8 +110,8 @@ function hihatDrum(beatNumber, time, audioContext, controlId) {
  */
 function arpySound(beatNumber, time, audioContext, controlId, note) {
   const boxes = allBoxes[controlId];
-  console.log('trigger:');
-  console.log(controlId);
+  // console.log('trigger:');
+  // console.log(controlId);
 
   if (boxes) {
     const src = audioContext.createBufferSource();
