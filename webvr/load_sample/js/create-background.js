@@ -18,19 +18,19 @@ function createBlinkBox(x, y, z) {
   return b;
 }
 
-ascene.appendChild(createBlinkBox(0.4, 12, -15));
-ascene.appendChild(createBlinkBox(-1.9, 9, -15));
-ascene.appendChild(createBlinkBox(-4.2, 6, -15));
-ascene.appendChild(createBlinkBox(-6.5, 3, -15));
-ascene.appendChild(createBlinkBox(-8.7, 6, -15));
-ascene.appendChild(createBlinkBox(-10.9, 9, -15));
-ascene.appendChild(createBlinkBox(-12.1, 12, -15));
-
-ascene.appendChild(createBlinkBox(0, 3, -15));
-
-ascene.appendChild(createBlinkBox(9.2, 3, -15));
-ascene.appendChild(createBlinkBox(9.2, 6, -15));
-ascene.appendChild(createBlinkBox(9.2, 9, -15));
-ascene.appendChild(createBlinkBox(9.2, 12, -15));
-ascene.appendChild(createBlinkBox(6.2, 12, -15));
-ascene.appendChild(createBlinkBox(12.2, 12, -15));
+// ascene.appendChild(createBlinkBox(0.4, 12, -15));
+// ascene.appendChild(createBlinkBox(-1.9, 9, -15));
+// ascene.appendChild(createBlinkBox(-4.2, 6, -15));
+// ascene.appendChild(createBlinkBox(-6.5, 3, -15));
+// ascene.appendChild(createBlinkBox(-8.7, 6, -15));
+// ascene.appendChild(createBlinkBox(-10.9, 9, -15));
+// ascene.appendChild(createBlinkBox(-12.1, 12, -15));
+//
+// ascene.appendChild(createBlinkBox(0, 3, -15));
+//
+// ascene.appendChild(createBlinkBox(9.2, 3, -15));
+// ascene.appendChild(createBlinkBox(9.2, 6, -15));
+// ascene.appendChild(createBlinkBox(9.2, 9, -15));
+// ascene.appendChild(createBlinkBox(9.2, 12, -15));
+// ascene.appendChild(createBlinkBox(6.2, 12, -15));
+// ascene.appendChild(createBlinkBox(12.2, 12, -15));
