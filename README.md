@@ -1,6 +1,6 @@
 # AV_EXP &middot; [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 
-> :art: :pencil: These examples can be used for any course in audio visual art (Processing/Pd).
+> :books: These examples can be used for any course in audio visual art (Processing/Pd).
 
 [demo](https://vibertthio.github.io/av_exp/)
 ![demo](./assets/images/avexp.png)
