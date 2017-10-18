@@ -44,6 +44,7 @@ color[] _colorOfStabs = {
 boolean activating = false;
 
 int scl = 40;
+// int scl = 80;
 int margin = scl / 2;
 int gap = 50;
 int nOfc = 4;
@@ -89,6 +90,7 @@ ControlFont font;
 void setup() {
   // size(1080, 720);
   size(800, 550);
+  // size(1600, 1200);
   background(_bk);
 
   //oscP5
