@@ -2,9 +2,8 @@
 
 > :books: These examples can be used for any course in audio visual art (Processing/Pd).
 
-[demo](https://vibertthio.github.io/av_exp/)
 ![demo](./assets/images/avexp.png)
-![demo](./assets/images/beatmap.png)
+[demo](https://vibertthio.github.io/av_exp/)
 
 ## 0. Table of Contents  
 - [Download](#1-download)
@@ -23,6 +22,7 @@ cd av_exp
 You need to download several dependencies in Processing IDE.
 If you have on idea how to download Processing libraries, you can follow the [instruction](https://github.com/processing/processing/wiki/How-to-Install-a-Contributed-Library) in Processing's wiki page.
 
+![demo](./assets/images/beatmap.png)
 
 ## 3. Run
 
